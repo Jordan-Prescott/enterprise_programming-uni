@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cities>
+  <headings>
+    <heading>City</heading>
+    <heading>Time</heading>
+    <heading>Population</heading>
+  </headings>
+  <city>
+    <name>${cities[0].name}</name>
+    <time>${cities[0].time}</time>
+    <population>${cities[0].population}</population>
+  </city>
+  <city>
+    <name>${cities[1].name}</name>
+    <time>${cities[1].time}</time>
+    <population>${cities[1].population}</population>
+  </city>
+  <city>
+    <name>${cities[2].name}</name>
+    <time>${cities[2].time}</time>
+    <population>${cities[2].population}</population>
+  </city>
+  <city>
+    <name>${cities[3].name}</name>
+    <time>${cities[3].time}</time>
+    <population>${cities[3].population}</population>
+  </city>
+  <city>
+    <name>${cities[4].name}</name>
+    <time>${cities[4].time}</time>
+    <population>${cities[4].population}</population>
+  </city>
+</cities>

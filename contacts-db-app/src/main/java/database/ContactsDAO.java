@@ -161,13 +161,21 @@ public class ContactsDAO {
 		return b;
 	}
 	
-//	public boolean updateContact(Contact c) throws SQLException {
-//		boolean b = false;
-//		// YOUR CODE HERE
-//		return b;
-//	}
+	public boolean deleteContact(String id) throws SQLException {
+	boolean b = false;
+	try {
+		String sql = "delete from contacts where id= "+ id +";";
+		System.out.println(sql);
+		b = getConnection().execute(sql);
+		closeConnection();
+		b = true;
+	} catch (SQLException s) {
+		throw new SQLException("Contact Not deleted");
+	}
+	return b;
+	}
 	
-//	public boolean deleteContact(Contact c) throws SQLException {
+//	public boolean updateContact(Contact c) throws SQLException {
 //		boolean b = false;
 //		// YOUR CODE HERE
 //		return b;

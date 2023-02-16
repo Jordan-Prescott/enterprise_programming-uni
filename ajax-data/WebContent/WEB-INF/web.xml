@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" 
+	xmlns="http://java.sun.com/xml/ns/j2ee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+ 
+  <!-- Use the URL http://hostname/appname/show-cities
+       for the ShowCities servlet.
+  -->
+  <servlet>
+    <servlet-name>ShowCities</servlet-name>
+    <servlet-class>coreservlets.ShowCities</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowCities</servlet-name>
+    <url-pattern>/show-cities</url-pattern>
+  </servlet-mapping>
+  
+  <!-- If URL gives a directory but no filename, try index.jsp
+       first and index.html second. If neither is found,
+       the result is server-specific (e.g., a directory 
+       listing or a 404 error).  
+  -->
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+</web-app>
