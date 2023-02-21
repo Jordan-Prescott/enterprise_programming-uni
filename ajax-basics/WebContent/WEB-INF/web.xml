@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.4">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
   <servlet>
     <servlet-name>ShowTimeInCity</servlet-name>
     <servlet-class>coreservlets.ShowTimeInCity</servlet-class>
@@ -20,4 +20,54 @@
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>Target</display-name>
+    <servlet-name>Target</servlet-name>
+    <servlet-class>coreservlets.Target</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Target</servlet-name>
+    <url-pattern>/Target</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Target2</display-name>
+    <servlet-name>Target2</servlet-name>
+    <servlet-class>controllers.Target</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Target2</servlet-name>
+    <url-pattern>/Target2</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>nextTarget</display-name>
+    <servlet-name>nextTarget</servlet-name>
+    <servlet-class>controllers.nextTarget</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>nextTarget</servlet-name>
+    <url-pattern>/nextTarget</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>nextTargetCustomer</display-name>
+    <servlet-name>nextTargetCustomer</servlet-name>
+    <servlet-class>controllers.nextTargetCustomer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>nextTargetCustomer</servlet-name>
+    <url-pattern>/nextTargetCustomer</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>nextTargetCustomerDetailed</display-name>
+    <servlet-name>nextTargetCustomerDetailed</servlet-name>
+    <servlet-class>controllers.nextTargetCustomerDetailed</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>nextTargetCustomerDetailed</servlet-name>
+    <url-pattern>/nextTargetCustomerDetailed</url-pattern>
+  </servlet-mapping>
 </web-app>
