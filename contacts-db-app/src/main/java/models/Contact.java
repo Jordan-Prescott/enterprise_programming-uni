@@ -1,10 +1,13 @@
 package models;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
 /**
  * Dr Mohammed Kaleem
  * Lab Work
  */
 
+@XmlRootElement(name = "contact")
 public class Contact {
 	
 	public Contact() {

@@ -161,10 +161,10 @@ public class ContactsDAO {
 		return b;
 	}
 	
-	public boolean deleteContact(String id) throws SQLException {
+	public boolean deleteContact(Contact c) throws SQLException {
 	boolean b = false;
 	try {
-		String sql = "delete from contacts where id= "+ id +";";
+		String sql = "delete from contacts where id= "+ c.getId() +";";
 		System.out.println(sql);
 		b = getConnection().execute(sql);
 		closeConnection();
@@ -175,9 +175,17 @@ public class ContactsDAO {
 	return b;
 	}
 	
-//	public boolean updateContact(Contact c) throws SQLException {
-//		boolean b = false;
-//		// YOUR CODE HERE
-//		return b;
-//	}
+	public boolean updateContact(Contact c) throws SQLException {
+		boolean b = false;
+		try {
+			String sql = "update contacts set name= '" + c.getName() + "', email= '" + c.getEmail() + "' where id= '" + c.getId() + "';";
+			System.out.println(sql);
+			b = getConnection().execute(sql);
+			closeConnection();
+			b = true;
+		} catch (SQLException s) {
+			throw new SQLException("Contact Not updated");
+		}
+		return b;
+	}
 }

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import database.ContactsDAO;
+import models.Contact;
 
 /**
  * Servlet implementation class deleteContact
@@ -44,8 +45,10 @@ public class deleteContact extends HttpServlet {
 		ContactsDAO dao = new ContactsDAO();
 		String id = request.getParameter("id");
 		
+		Contact c = dao.selectContacts(Integer.valueOf(id));
+		
 		try {
-			dao.deleteContact(id);
+			dao.deleteContact(c);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
