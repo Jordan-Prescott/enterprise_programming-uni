@@ -1,7 +1,14 @@
+package database;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import model.Film;
+
 import java.sql.*;
+
+
 
 
 public class FilmDAO {
@@ -9,8 +16,8 @@ public class FilmDAO {
 	Film oneFilm = null;
 	Connection conn = null;
     Statement stmt = null;
-	String user = "enter_your_mysql_username_here";
-    String password = "enter_your_mysql_password_here";
+	String user = "prescotj";
+    String password = "tramkerL4";
     // Note none default port used, 6306 not 3306
     String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk:6306/"+user;
 

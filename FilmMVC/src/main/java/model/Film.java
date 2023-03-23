@@ -1,3 +1,5 @@
+package model;
+
 
 public class Film {
    public Film(int id, String title, int year, String director, String stars,
