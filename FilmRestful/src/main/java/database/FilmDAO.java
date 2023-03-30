@@ -41,7 +41,7 @@ public class FilmDAO {
 			stmt = conn.createStatement();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException c) {
+		} catch (ClassNotFoundException c) {	
 			c.printStackTrace();
 		}
 
