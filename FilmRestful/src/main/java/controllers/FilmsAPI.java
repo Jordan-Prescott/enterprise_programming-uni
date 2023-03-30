@@ -22,6 +22,8 @@ import com.google.gson.Gson;
 
 import model.Film;
 import model.FilmList;
+import models.Contact;
+import database.ContactsDAO;
 import database.FilmDAO;
 
 
@@ -84,7 +86,40 @@ public class FilmsAPI extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		FilmDAO dao = new FilmDAO();
+		PrintWriter out = response.getWriter();
+		String dataFormat = request.getHeader("Content-Type");
+	
+		String data = request.getReader().lines().reduce("",
+				(accumulator, actual) -> accumulator + actual);
+		
+		Film f = null;
+		
+		if (dataFormat.equals("application/xml")) {
+			JAXBContext jaxbContext;
+			try {
+				jaxbContext = JAXBContext.newInstance(Film.class);
+				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+				f = (Film) jaxbUnmarshaller.unmarshal(new StringReader(data));
+			} catch (JAXBException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		} else if (dataFormat.equals("application/json")){
+			Gson gson = new Gson();
+			f = gson.fromJson(data, Film.class);
+		}
+		
+		try {
+			dao.insertFilm(f);
+			out.write("contact inserted");	
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			out.write("ERROR");	
+		}
+		out.close();
 	}
 	
 	@Override
