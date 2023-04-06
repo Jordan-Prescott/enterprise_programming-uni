@@ -21,8 +21,10 @@ import model.Film;
  *         each method has been tagged with //{OPERATION} at the start to
  *         identify.
  * 
- *         Create : insertFilm() Read : getNextFilm(), getAllFilms(), getFilm
- *         Update : updateFilm() Delete : deleteFilm
+ *         Create : insertFilm() 
+ *         Read   : getNextFilm(), getAllFilms(), getFilm
+ *         Update : updateFilm() 
+ *         Delete : deleteFilm
  * 
  * @version 1.0
  * @since 06/04/23
@@ -98,7 +100,7 @@ public enum FilmDAOEnum {
 	 */
 	public boolean insertFilm(Film f) throws SQLException { // CREATE
 
-		String insertSQL = "INSERT INTO films " + "(title, year, director, stars, review) " + "VALUES (?, ?, ?, ?, ?);";
+		String insertSQL = "INSERT INTO films (title, year, director, stars, review) VALUES (?, ?, ?, ?, ?);";
 		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.
 
 		try {
@@ -151,7 +153,7 @@ public enum FilmDAOEnum {
 	 * Film object and appending this to the array. The completed array of Film
 	 * objects is then returned.
 	 * 
-	 * @return filmsArray Array of all films returned from DB.
+	 * @return filmsArray Array of Film objects built on DB response.
 	 */
 	public ArrayList<Film> getAllFilms() { // READ
 
@@ -224,8 +226,7 @@ public enum FilmDAOEnum {
 	 * @throws SQLException
 	 */
 	public boolean updateFilm(Film f) throws SQLException { // UPDATE
-		String insertSQL = "UPDATE films " + "SET title=?, " + "year=?, " + "director=?, " + "stars=?, " + "review=? "
-				+ "WHERE id=?;";
+		String insertSQL = "UPDATE films SET title=?, year=?, director=?, stars=?, review=? WHERE id=?;";
 		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.
 
 		try {
@@ -254,7 +255,7 @@ public enum FilmDAOEnum {
 	/**
 	 * deleteFilm
 	 * 
-	 * Takes parameter of Film object and uses details of Film to format an SQL
+	 * Takes parameter of id an Integer and uses details of Film to format an SQL
 	 * query and then execute the query against the DB. This deletes a film entry in
 	 * DB.
 	 * 
@@ -262,7 +263,7 @@ public enum FilmDAOEnum {
 	 * @return b Boolean of true to indicate completion.
 	 * @throws SQLException
 	 */
-	public boolean deleteFilm(Film f) throws SQLException { // DELETE
+	public boolean deleteFilm(int id) throws SQLException { // DELETE
 
 		String deleteSQL = "DELETE FROM films WHERE id = ?;";
 		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.
@@ -271,7 +272,7 @@ public enum FilmDAOEnum {
 			openConnection(deleteSQL);
 
 			// format SQL
-			prepStmt.setInt(1, f.getId());
+			prepStmt.setInt(1, id);
 			System.out.println(prepStmt.toString());
 
 			int deleteFilmResult = prepStmt.executeUpdate(); // execute prepared statement
