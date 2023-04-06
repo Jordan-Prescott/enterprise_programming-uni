@@ -114,11 +114,11 @@ public class ContactsAPIController extends HttpServlet {
 		
 		try {
 			dao.insertContact(c);
-			out.write("contact inserted");	
+			out.write("contact inserted.");	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			out.write("ERROR");	
+			out.write("[ERROR] film not added.");	
 		}
 		out.close();
 	}
@@ -140,7 +140,7 @@ public class ContactsAPIController extends HttpServlet {
 				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 				Contact c = (Contact) jaxbUnmarshaller.unmarshal(new StringReader(data));
 				dao.updateContact(c);
-				out.write("contact updated");	
+				out.write("contact updated.");	
 			} catch (JAXBException | SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -152,7 +152,7 @@ public class ContactsAPIController extends HttpServlet {
 			Contact c = gson.fromJson(data, Contact.class);
 			try {
 				dao.updateContact(c);
-				out.write("contact updated");	
+				out.write("contact updated.");	
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -191,11 +191,11 @@ public class ContactsAPIController extends HttpServlet {
 		
 		try {
 			dao.deleteContact(c);
-			out.write("contact deleted");	
+			out.write("contact deleted.");	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			out.write("ERROR");	
+			out.write("[ERROR] film not deleted.");	
 		}
 		out.close();
 	}

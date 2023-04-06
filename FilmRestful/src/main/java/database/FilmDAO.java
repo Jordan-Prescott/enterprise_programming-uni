@@ -80,8 +80,12 @@ public class FilmDAO {
 	private Film getNextFilm(ResultSet rs) {
 		Film thisFilm = null;
 		try {
-			thisFilm = new Film(rs.getInt("id"), rs.getString("title"), rs.getInt("year"), rs.getString("director"),
-					rs.getString("stars"), rs.getString("review"));
+			thisFilm = new Film(rs.getInt("id"), 
+					rs.getString("title"), 
+					rs.getInt("year"), 
+					rs.getString("director"),
+					rs.getString("stars"), 
+					rs.getString("review"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,10 +106,10 @@ public class FilmDAO {
 		// Create select statement and execute it
 		try {
 			String selectSQL = "select * from films";
-			ResultSet rs1 = stmt.executeQuery(selectSQL);
+			ResultSet rs = stmt.executeQuery(selectSQL);
 			// Retrieve the results
-			while (rs1.next()) {
-				oneFilm = getNextFilm(rs1);
+			while (rs.next()) {
+				oneFilm = getNextFilm(rs);
 				filmsArray.add(oneFilm);
 			}
 
@@ -171,10 +175,14 @@ public class FilmDAO {
 
 	public boolean deleteFilm(Film f) throws SQLException {
 		boolean b = false;
+		openConnection();
 		try {
 			String sql = "delete from films where id= " + f.getId() + ";";
-			System.out.println(sql);	
-			b = getConnection().execute(sql);
+			System.out.println(sql);
+			stmt = conn.createStatement();
+			stmt.execute(sql);
+			
+			stmt.close();
 			closeConnection();
 			b = true;
 		} catch (SQLException s) {

@@ -25,6 +25,7 @@ import model.FilmList;
 import models.Contact;
 import database.ContactsDAO;
 import database.FilmDAO;
+import database.FilmDAOEnum;
 
 
 
@@ -52,7 +53,8 @@ public class FilmsAPI extends HttpServlet {
 
 		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
-		FilmDAO dao = new FilmDAO();
+//		FilmDAO doa = new FilmDAO();
+		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		ArrayList<Film> allFilms = dao.getAllFilms();
 
 		String dataFormat = request.getHeader("Content-Type");
@@ -86,7 +88,8 @@ public class FilmsAPI extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		FilmDAO dao = new FilmDAO();
+//		FilmDAO dao = new FilmDAO();
+		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		PrintWriter out = response.getWriter();
 		String dataFormat = request.getHeader("Content-Type");
 	
@@ -125,7 +128,8 @@ public class FilmsAPI extends HttpServlet {
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		FilmDAO dao = new FilmDAO();
+//		FilmDAO dao = new FilmDAO();
+		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		PrintWriter out = response.getWriter();
 		String dataFormat = request.getHeader("Content-Type");
 		
@@ -163,7 +167,8 @@ public class FilmsAPI extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		FilmDAO dao = new FilmDAO();
+//		FilmDAO dao = new FilmDAO();
+		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		PrintWriter out = response.getWriter();
 		String dataFormat = request.getHeader("Content-Type");
 	
