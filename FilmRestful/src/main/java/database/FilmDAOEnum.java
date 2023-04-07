@@ -232,7 +232,7 @@ public enum FilmDAOEnum {
 		try {
 			openConnection(insertSQL);
 
-			// format SQL
+			//format SQL
 			prepStmt.setString(1, f.getTitle());
 			prepStmt.setInt(2, f.getYear());
 			prepStmt.setString(3, f.getDirector());
@@ -241,7 +241,7 @@ public enum FilmDAOEnum {
 			prepStmt.setInt(6, f.getId());
 			System.out.println(prepStmt.toString());
 
-			int udpateFilmResult = prepStmt.executeUpdate(); // execute prepared statement
+			int udpateFilmResult = prepStmt.executeUpdate(); //execute prepared statement
 
 			closeConnection();
 			b = true;
@@ -263,7 +263,7 @@ public enum FilmDAOEnum {
 	 * @return b Boolean of true to indicate completion.
 	 * @throws SQLException
 	 */
-	public boolean deleteFilm(int id) throws SQLException { // DELETE
+	public boolean deleteFilm(int id) throws SQLException { //DELETE
 
 		String deleteSQL = "DELETE FROM films WHERE id = ?;";
 		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.

@@ -1,5 +1,17 @@
 package model;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+/**
+ * Film
+ * 
+ * @author jordanprescott
+ *
+ * @version 1.0
+ * @since 06/04/23
+ * 
+ */
+@XmlRootElement(name = "film") // JAXB annotation: root element
 public class Film {
 	public Film(int id, String title, int year, String director, String stars, String review) {
 		super();
