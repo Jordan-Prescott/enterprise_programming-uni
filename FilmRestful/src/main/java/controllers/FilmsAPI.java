@@ -6,6 +6,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -79,19 +80,43 @@ public class FilmsAPI extends HttpServlet {
 
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		PrintWriter out = response.getWriter();
-		ArrayList<Film> allFilms = dao.getAllFilms();
+		
 		String format = request.getHeader("Accept");
-
+		String id = request.getParameter("id");
+		String title = request.getParameter("title");
+		
+		ArrayList<Film> allFilms = null;
+		Film f = null;
+		
+		// collect entries for output depending on what is requested.
+		if(id != null) { // return single film
+			f = new Film();
+			
+			f.setId(Integer.parseInt(id));
+			allFilms = dao.getFilm(f);
+			
+		} else if (title != null) { // return single or multiple films
+			f = new Film();
+			
+			f.setTitle(title);
+			allFilms = dao.getFilm(f);
+			
+		} else { // return all films:
+			
+			allFilms = dao.getAllFilms();
+			
+		}
+		
 		// JSON: default output
 		Gson gson = new Gson();
 		response.setContentType("application/json");
 		String data = gson.toJson(allFilms);
-
+		
 		if (format.equals("application/xml")) { // XML
 			FilmList fl = new FilmList(allFilms);
 			StringWriter sw = new StringWriter();
 			JAXBContext context;
-
+			
 			try {
 				context = JAXBContext.newInstance(FilmList.class);
 				Marshaller m = context.createMarshaller();
@@ -101,22 +126,26 @@ public class FilmsAPI extends HttpServlet {
 				System.out.println(e);
 				e.printStackTrace();
 			}
-
+			
 			data = sw.toString();
-
+			
 		} else if (format.equals("text/plain")) { // TEXT
 			String textOutput = "id#title#year#director#stars#review#\n"; // Headers
-
-			for (Film f : allFilms) {
-				String row = String.format("%s#%s#%s#%s#%s#%s\n", String.valueOf(f.getId()), f.getTitle(),
-						String.valueOf(f.getYear()), f.getDirector(), f.getStars(), f.getReview());
+			
+			for (Film f2 : allFilms) {
+				String row = String.format("%s#%s#%s#%s#%s#%s\n", String.valueOf(f2.getId()), f2.getTitle(),
+						String.valueOf(f2.getYear()), f2.getDirector(), f2.getStars(), f2.getReview());
 				textOutput += row;
 			}
-
+			
 			data = textOutput;
 		}
-
-		out.write(data); // return content to client
+		
+		if (allFilms.isEmpty()) {
+		    out.write("No results found.");
+		} else {			
+			out.write(data); // return content to client
+		}
 	}
 
 	/**

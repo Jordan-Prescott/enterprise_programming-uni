@@ -191,27 +191,44 @@ public enum FilmDAOEnum {
 	 *         TODO: This may not be needed or is needed in MVC return when you hit
 	 *         that for RESTAPI its not needed.
 	 */
-	public Film getFilm(Film f) { // READ
+	public ArrayList<Film> getFilm(Film f) { // READ
 
-		oneFilm = null;
-		// format query
+		ArrayList<Film> filmsArray = new ArrayList<Film>();
+		
+		// format query depending what is passed in
 		String selectSQL = "SELECT * FROM films WHERE 1 = 1";
+		
+		if (f.getId() != 0) {
+			selectSQL += " AND id = ?";		
+		} else if (f.getTitle() != null) {
+			selectSQL += " AND title LIKE ?"; // like here wild cards SQL query 
+		}
+		selectSQL += ";"; // end of query
 
-		try {
+		try {	
 			openConnection(selectSQL);
+			
+			// adjust prepared statement based on what is passed in
+			if (f.getId() != 0) {
+				prepStmt.setInt(1, f.getId());	
+			} else if (f.getTitle() != null) {
+				prepStmt.setString(1, "%" + f.getTitle() + "%"); // percentage here wild cards SQL query
+			}
+			
+			System.out.println(prepStmt);
 			ResultSet rs = prepStmt.executeQuery();
-			// Retrieve the results
+
 			while (rs.next()) {
 				oneFilm = getNextFilm(rs);
+				filmsArray.add(oneFilm);
 			}
 
-			prepStmt.close();
+			closeConnection();
 		} catch (SQLException se) {
 			System.out.println(se);
 		}
-
-		closeConnection();
-		return oneFilm;
+		
+		return filmsArray;
 	}
 
 	/**
