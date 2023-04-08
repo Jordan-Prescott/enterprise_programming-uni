@@ -13,12 +13,9 @@ import database.FilmDAOEnum;
 import model.Film;
 
 /**
- * Servlet implementation class deleteFilm
- */
-@WebServlet("/deleteFilm")
-
-/**
  * deleteFilm
+ * 
+ * Servlet implementation class deleteFilm
  * 
  * @author jordanprescott
  * 
@@ -34,6 +31,7 @@ import model.Film;
  * @since 08/04/23
  * 
  */
+@WebServlet("/deleteFilm")
 public class deleteFilm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

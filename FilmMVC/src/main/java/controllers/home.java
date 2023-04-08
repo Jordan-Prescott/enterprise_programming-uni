@@ -14,13 +14,10 @@ import database.FilmDAOEnum;
 import model.Film;
 
 /**
- * Servlet implementation class home
- */
-@WebServlet("/home")
-
-/**
  * home
  * 
+ * Servlet implementation class home
+ *
  * @author jordanprescott
  *
  *         The 'home' servlet is a Java class that is designed to retrieve all
@@ -33,8 +30,9 @@ import model.Film;
  * 
  * @version 1.0
  * @since 08/04/23
- *
+ * 
  */
+@WebServlet("/home")
 public class home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
