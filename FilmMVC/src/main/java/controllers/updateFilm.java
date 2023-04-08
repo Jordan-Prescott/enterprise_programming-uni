@@ -17,25 +17,32 @@ public class updateFilm extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public updateFilm() {
+    public updateFilm() { // constructor
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
+	 * doGet
+	 * 
+	 * ONLY USED TO INVOKE doPost()
+	 * 
+  	 * Href used in JSP meaning by default the request is GET. This method invokes
+	 * doPost to follow industry standards. When passing data to a server this is
+	 * handled by POST requests.
+	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		doPost(request, response); // pass to doPost()
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
 	}
 
 }
