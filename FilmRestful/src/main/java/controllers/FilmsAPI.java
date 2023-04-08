@@ -25,6 +25,8 @@ import model.FilmList;
 import database.FilmDAOEnum;
 
 /**
+ * FilmAPI
+ * 
  * Servlet implementation class FilmsAPI
  * 
  * @author jordanprescott
@@ -192,7 +194,7 @@ public class FilmsAPI extends HttpServlet {
 				f = new Film();
 
 				f.setTitle(values[0]);
-				f.setYear(Integer.parseInt(values[1].replace(" ", ""))); // data sanitization
+				f.setYear(Integer.parseInt(values[1].replaceAll("[^0-9]", ""))); // data sanitization
 				f.setDirector(values[2]);
 				f.setStars(values[3]);
 				f.setReview(values[4]);
@@ -264,7 +266,7 @@ public class FilmsAPI extends HttpServlet {
 
 				f.setId(Integer.parseInt(values[0]));
 				f.setTitle(values[1]);
-				f.setYear(Integer.parseInt(values[2].replace(" ", ""))); // data sanitization
+				f.setYear(Integer.parseInt(values[2].replaceAll("[^0-9]", ""))); // data sanitization
 				f.setDirector(values[3]);
 				f.setStars(values[4]);
 				f.setReview(values[5]);
@@ -337,7 +339,7 @@ public class FilmsAPI extends HttpServlet {
 
 				f = new Film(); // Film object created for program consistency
 
-				f.setId(Integer.parseInt(data.replace(" ", "").replace("#", ""))); // data sanitization
+				f.setId(Integer.parseInt(data.replaceAll("[^0-9]", ""))); // data sanitization
 
 				id = f.getId();
 				System.out.println(id);
