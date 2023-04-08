@@ -6,8 +6,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -93,13 +91,13 @@ public class FilmsAPI extends HttpServlet {
 			f = new Film();
 			
 			f.setId(Integer.parseInt(id));
-			allFilms = dao.getFilm(f);
+			allFilms = dao.searchFilms(f);
 			
 		} else if (title != null) { // return single or multiple films
 			f = new Film();
 			
 			f.setTitle(title);
-			allFilms = dao.getFilm(f);
+			allFilms = dao.searchFilms(f);
 			
 		} else { // return all films:
 			

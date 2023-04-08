@@ -157,8 +157,8 @@ public enum FilmDAOEnum {
 	 */
 	public ArrayList<Film> getAllFilms() { // READ
 
-		String selectSQL = "SELECT * FROM films;";
 		ArrayList<Film> filmsArray = new ArrayList<Film>();
+		String selectSQL = "SELECT * FROM films;";
 
 		try {
 			openConnection(selectSQL);
@@ -179,7 +179,7 @@ public enum FilmDAOEnum {
 	}
 
 	/**
-	 * getFilm
+	 * searchFilms
 	 * 
 	 * Takes parameter of Film object and uses details of Film to format an SQL
 	 * query and then execute the query against the DB. This retrieves a single film
@@ -191,7 +191,7 @@ public enum FilmDAOEnum {
 	 *         TODO: This may not be needed or is needed in MVC return when you hit
 	 *         that for RESTAPI its not needed.
 	 */
-	public ArrayList<Film> getFilm(Film f) { // READ
+	public ArrayList<Film> searchFilms(Film f) { // READ
 
 		ArrayList<Film> filmsArray = new ArrayList<Film>();
 		
@@ -230,6 +230,7 @@ public enum FilmDAOEnum {
 		
 		return filmsArray;
 	}
+	
 
 	/**
 	 * updateFilm
