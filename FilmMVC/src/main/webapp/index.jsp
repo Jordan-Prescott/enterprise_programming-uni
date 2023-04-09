@@ -7,12 +7,12 @@
 <head>
 <link rel="stylesheet" href="./styles/bootstrap.css">
 <meta charset="UTF-8">
-<title>MVC Film DB</title>
+<title>Film DB</title>
 </head>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="#">Film DB.</a>
+		<a class="navbar-brand" href="#">Film DB</a>
 		<form class="d-flex">
 			<input class="form-control me-sm-2" type="search"
 				placeholder="Search">
@@ -27,42 +27,33 @@
 	<!-- Insert new film. -->
 	<div class="list-group">
 		<form method="POST" action="./createFilm">
-
 			<fieldset>
-				<legend>Legend</legend>
-				<div class="form-group row">
-					<label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-					<div class="col-sm-10">
-						<input type="text" readonly="" class="form-control-plaintext"
-							id="staticEmail" value="email@example.com">
-					</div>
+				<div class="form-group">
+					<label for="fTitle" class="mt-4">Title</label> <input
+						type="text" class="form-control" name="title" id="title"
+						placeholder="The Dark Knight" required>
 				</div>
 				<div class="form-group">
-					<label for="exampleInputEmail1" class="form-label mt-4">Email
-						address</label> <input type="email" class="form-control"
-						id="exampleInputEmail1" aria-describedby="emailHelp"
-						placeholder="Enter email"> <small id="emailHelp"
-						class="form-text text-muted">We'll never share your email
-						with anyone else.</small>
+					<label for="fYear" class="mt-4">Year</label> <input
+						type="number" min="1888" class="form-control" name="year" id="year"
+						placeholder="2008" required>
 				</div>
 				<div class="form-group">
-					<label for="exampleInputPassword1" class="form-label mt-4">Password</label>
-					<input type="password" class="form-control"
-						id="exampleInputPassword1" placeholder="Password">
+					<label for="fDirector" class="mt-4">Director</label> <input
+						type="text" class="form-control" name="director" id="director"
+						placeholder="Christopher Nolan" required>
 				</div>
-
-				<label for="fTitle">Title:</label><br> <input type="text"
-					id="title" name="title" required><br> <label
-					for="fYear">Year:</label><br> <input type="number" min="1888"
-					id="year" name="year" required><br> <label
-					for="fDirector">Director:</label><br> <input type="text"
-					id="director" name="director" required><br> <label
-					for="fStars">Stars:</label><br> <input type="text" id="stars"
-					name="stars" required><br> <label for="fReview">Review:</label><br>
-				<input type="text" id="review" name="review" required><br>
-
+				<div class="form-group">
+					<label for="fStars" class="mt-4">Stars</label> <input
+						type="text" class="form-control" name="stars" id="stars"
+						placeholder="Christian Bale, Heith Ledger, Aaron Eckhart" required>
+				</div>
+				<div class="form-group">
+					<label for="fReview" class="mt-4">Review</label>
+					<textarea class="form-control" name="review" id="review" rows="3" required></textarea>
+				</div>
 				<br>
-				<button>Add Film.</button>
+				<button class="btn btn-primary">Add Film.</button>
 				<br>
 			</fieldset>
 		</form>
@@ -97,4 +88,4 @@
 
 </body>
 <!-- BODY -->
-</html>
+</html> 

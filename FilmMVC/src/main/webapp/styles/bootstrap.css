@@ -406,9 +406,10 @@ textarea {
 
 fieldset {
   min-width: 0;
-  padding: 0;
+  padding: 10px 400px 30px 100px;
   margin: 0;
   border: 0;
+  background: #ecf0f1;
 }
 
 legend {
@@ -1969,7 +1970,12 @@ progress {
   }
 }
 .form-label {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem; 
+}
+.form-group {
+  margin-bottom: 0.3rem;
 }
 
 .col-form-label {
@@ -2879,7 +2885,7 @@ textarea.form-control-lg {
 .btn-check:checked + .btn:focus-visible, :not(.btn-check) + .btn:active:focus-visible, .btn:first-child:active:focus-visible, .btn.active:focus-visible, .btn.show:focus-visible {
   box-shadow: var(--bs-btn-focus-box-shadow);
 }
-.btn:disabled, .btn.disabled, fieldset:disabled .btn {
+.btn:disabled, .btn.disabled .btn {
   color: var(--bs-btn-disabled-color);
   pointer-events: none;
   background-color: var(--bs-btn-disabled-bg);
@@ -4200,7 +4206,7 @@ textarea.form-control-lg {
   --bs-card-border-color: var(--bs-border-color-translucent);
   --bs-card-border-radius: 0.375rem;
   --bs-card-box-shadow: ;
-  --bs-card-inner-border-radius: calc(0.375rem - 1px);
+  --bs-card-inner-border-radius: calc(5rem - 10px); /* HERE */
   --bs-card-cap-padding-y: 0.5rem;
   --bs-card-cap-padding-x: 1rem;
   --bs-card-cap-bg: rgba(0, 0, 0, 0.03);
@@ -4228,6 +4234,7 @@ textarea.form-control-lg {
 .card > .list-group {
   border-top: inherit;
   border-bottom: inherit;
+  border-left: 100px /* HERE */
 }
 .card > .list-group:first-child {
   border-top-width: 0;
@@ -4826,7 +4833,6 @@ textarea.form-control-lg {
 
 .list-group {
   --bs-list-group-color: #212529;
-  --bs-list-group-bg: #fff;
   --bs-list-group-border-color: rgba(0, 0, 0, 0.125);
   --bs-list-group-border-width: 1px;
   --bs-list-group-border-radius: 0.375rem;
@@ -4842,10 +4848,11 @@ textarea.form-control-lg {
   --bs-list-group-active-color: #fff;
   --bs-list-group-active-bg: #2c3e50;
   --bs-list-group-active-border-color: #2c3e50;
+  background: red;
   display: flex;
   flex-direction: column;
-  padding-left: 0;
-  margin-bottom: 0;
+  padding-left: 100;
+  margin-bottom: 100;
   border-radius: var(--bs-list-group-border-radius);
 }
 
@@ -7661,11 +7668,11 @@ textarea.form-control-lg {
 }
 
 .mt-3 {
-  margin-top: 1rem !important;
+  margin-top: 0.5rem !important;
 }
 
 .mt-4 {
-  margin-top: 1.5rem !important;
+  margin-top: 0.5rem !important;
 }
 
 .mt-5 {
@@ -10953,4 +10960,7 @@ textarea.form-control-lg {
 .toast .btn-close,
 .offcanvas .btn-close {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+
+
+
 }
