@@ -10,57 +10,31 @@
 <title>Film DB</title>
 </head>
 
+<!-- NAV START -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 	<div class="container-fluid">
-		<a class="navbar-brand" href="#">Film DB</a>
-		<form class="d-flex">
+	
+	  	<!-- FILMDB LOGO + ADD BUTTON -->
+		<a class="navbar-brand" href="./home">Film DB</a>
+		<ul class="navbar-nav me-auto">
+			<li class="nav-item"><a class="btn btn-success"
+				href="./createFilm">Add Film</a></li>
+		</ul>
+		
+		<!-- SEARCH -->
+		<form method="POST" action="./searchFilms" class="d-flex">
 			<input class="form-control me-sm-2" type="search"
-				placeholder="Search">
-			<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+				placeholder="Search Title" name="title" id="title">
+			<button class="btn btn-secondary my-2 my-sm-0">Search</button>
 		</form>
+		
 	</div>
 </nav>
-<!-- NAV -->
+<!-- NAV END -->
 
+<!-- BODY START -->
 <body>
-
-	<!-- Insert new film. -->
-	<div class="list-group">
-		<form method="POST" action="./createFilm">
-			<fieldset>
-				<div class="form-group">
-					<label for="fTitle" class="mt-4">Title</label> <input
-						type="text" class="form-control" name="title" id="title"
-						placeholder="The Dark Knight" required>
-				</div>
-				<div class="form-group">
-					<label for="fYear" class="mt-4">Year</label> <input
-						type="number" min="1888" class="form-control" name="year" id="year"
-						placeholder="2008" required>
-				</div>
-				<div class="form-group">
-					<label for="fDirector" class="mt-4">Director</label> <input
-						type="text" class="form-control" name="director" id="director"
-						placeholder="Christopher Nolan" required>
-				</div>
-				<div class="form-group">
-					<label for="fStars" class="mt-4">Stars</label> <input
-						type="text" class="form-control" name="stars" id="stars"
-						placeholder="Christian Bale, Heith Ledger, Aaron Eckhart" required>
-				</div>
-				<div class="form-group">
-					<label for="fReview" class="mt-4">Review</label>
-					<textarea class="form-control" name="review" id="review" rows="3" required></textarea>
-				</div>
-				<br>
-				<button class="btn btn-primary">Add Film.</button>
-				<br>
-			</fieldset>
-		</form>
-	</div>
-	<b></b>
-
-	<!-- Display database output. -->
+	<!-- FILMS TABLE -->
 	<div class="">
 		<table class="table table-hover">
 			<tr>
@@ -71,7 +45,7 @@
 				<th>Review</th>
 			</tr>
 
-			<c:forEach items="${films}" var="f">
+			<c:forEach items="${films}" var="f"> <!-- LOOPS THROUGH ARRAY OF FILMS GENERATING TABLE -->
 				<tr>
 					<td><em>${f.title}</em></td>
 					<td><em>${f.year}</em></td>
@@ -88,4 +62,4 @@
 
 </body>
 <!-- BODY -->
-</html> 
+</html>
