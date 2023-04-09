@@ -95,6 +95,9 @@
 }
 
 body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
   margin: 0;
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
@@ -116,7 +119,7 @@ hr {
 }
 
 h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
-  margin-top: 0;
+  margin-top: 3rem	;
   margin-bottom: 0.5rem;
   font-weight: 500;
   line-height: 1.2;
@@ -124,6 +127,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 
 h1, .h1 {
   font-size: calc(1.425rem + 2.1vw);
+  text-align: center;
 }
 @media (min-width: 1200px) {
   h1, .h1 {
@@ -406,12 +410,33 @@ textarea {
 
 fieldset {
   min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+.fieldset-index {
+  min-width: 0;
   padding: 10px 400px 30px 100px;
   margin: 0;
   border: 0;
   background: #ecf0f1;
 }
+.fieldset-updateFilm {
+  min-width: 0;
+  padding: 10px 400px 150px 400px;
+  margin: 0;
+  border: 0;
+  background: #fff;
+}
+.form-box {
+	  border-radius: 10px;
+      border: 2px solid #ccc;
+      padding: 20px;
+      background-color:#ecf0f1 ;
+      /* Center the element horizontally */
+      margin: 0 auto;
 
+}
 legend {
   float: left;
   width: 100%;
@@ -2942,6 +2967,7 @@ textarea.form-control-lg {
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: #18bc9c;
   --bs-btn-disabled-border-color: #18bc9c;
+  text-align: right;
 }
 
 .btn-info {
@@ -3666,6 +3692,7 @@ textarea.form-control-lg {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+
 }
 
 .nav-link {
