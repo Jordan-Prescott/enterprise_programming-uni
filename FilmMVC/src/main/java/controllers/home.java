@@ -52,6 +52,7 @@ public class home extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		ArrayList<Film> allFilms = dao.getAllFilms(); // get films and store array
 
