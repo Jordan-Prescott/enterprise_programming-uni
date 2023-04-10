@@ -22,12 +22,12 @@ import model.Film;
  *         identify.
  * 
  *         Create : insertFilm() 
- *         Read   : getNextFilm(), getAllFilms(), getFilm
+ *         Read : getNextFilm(), getAllFilms(), getFilm()
  *         Update : updateFilm() 
  *         Delete : deleteFilm
  * 
  * @version 1.0
- * @since 06/04/23
+ * @since 10/04/23
  *
  */
 public enum FilmDAOEnum {
@@ -179,28 +179,28 @@ public enum FilmDAOEnum {
 
 		return filmsArray;
 	}
-	
+
 	/**
 	 * getFilm
 	 * 
+	 * Takes a single parameter of a Film object and then uses the getId() format
+	 * prepared statement SQL query. The query is then executed and a single Film
+	 * object is returned from result set.
 	 * 
-	 * 
-	 * @param f
-	 * @return
+	 * @param f Film object
+	 * @return oneFilm A single film from the results of the query
 	 */
 	public Film getFilm(Film f) { // READ
-		
+
 		String selectSQL = "SELECT * FROM films WHERE id = ?;";
-		
-		try {
+
+		try { // get film from DB
 			openConnection(selectSQL);
-			
+
 			prepStmt.setInt(1, f.getId());
 			System.out.println(prepStmt.toString());
-			
+
 			ResultSet rs = prepStmt.executeQuery();
-			
-			System.out.println(rs);
 
 			while (rs.next()) {
 				oneFilm = getNextFilm(rs);
@@ -210,18 +210,18 @@ public enum FilmDAOEnum {
 		} catch (SQLException se) {
 			System.out.println(se);
 		}
-		
+
 		return oneFilm;
 	}
 
 	/**
 	 * searchFilms
 	 * 
-	 * Takes parameter of String s a sql query and uses SQL OR to make string a dynamic
-	 * query and then execute the query against the DB. This retrieves any films the 
-	 * OR statements have triggered true. For example you can search for director name
-	 * or number of stars or the year and this will return everything found without
-	 * needing to heavily format the query.
+	 * Takes parameter of String s a sql query and uses SQL OR to make string a
+	 * dynamic query and then execute the query against the DB. This retrieves any
+	 * films the OR statements have triggered true. For example you can search for
+	 * director name or number of stars or the year and this will return everything
+	 * found without needing to heavily format the query.
 	 * 
 	 * @param f Film object that will be updated in DB.
 	 * @return oneFilm Film object of returned film from DB.
@@ -230,24 +230,23 @@ public enum FilmDAOEnum {
 	public ArrayList<Film> searchFilms(String s) { // READ
 
 		ArrayList<Film> filmsArray = new ArrayList<Film>();
-		
+
 		// format query depending what is passed in
-		String selectSQL = "SELECT * FROM films WHERE id= ? OR title LIKE ? OR year= ? OR director LIKE ? OR stars LIKE ? OR genre = ? OR rating = ?;";
-	
-		try {	
+		String selectSQL = "SELECT * FROM films WHERE title LIKE ? OR year= ? OR director LIKE ? OR stars LIKE ? OR genre = ? OR rating = ?;";
+
+		try {
 			openConnection(selectSQL);
-			
+
 			// passes in string in all places and wildcards some for better results
-			prepStmt.setString(1, s);
-			prepStmt.setString(2, "%" + s + "%");
-			prepStmt.setString(3, s);
+			prepStmt.setString(1, "%" + s + "%");
+			prepStmt.setString(2, s);
+			prepStmt.setString(3, "%" + s + "%");
 			prepStmt.setString(4, "%" + s + "%");
-			prepStmt.setString(5, "%" + s + "%");
+			prepStmt.setString(5, s);
 			prepStmt.setString(6, s);
-			prepStmt.setString(7, s);
 			System.out.println(prepStmt);
-			
-			ResultSet rs = prepStmt.executeQuery();	
+
+			ResultSet rs = prepStmt.executeQuery();
 
 			while (rs.next()) {
 				oneFilm = getNextFilm(rs);
@@ -258,10 +257,9 @@ public enum FilmDAOEnum {
 		} catch (SQLException se) {
 			System.out.println(se);
 		}
-		
+
 		return filmsArray;
 	}
-	
 
 	/**
 	 * updateFilm
@@ -281,7 +279,7 @@ public enum FilmDAOEnum {
 		try {
 			openConnection(insertSQL);
 
-			//format SQL
+			// format SQL
 			prepStmt.setString(1, f.getTitle());
 			prepStmt.setInt(2, f.getYear());
 			prepStmt.setString(3, f.getDirector());
@@ -292,7 +290,7 @@ public enum FilmDAOEnum {
 			prepStmt.setInt(8, f.getId());
 			System.out.println(prepStmt.toString());
 
-			int udpateFilmResult = prepStmt.executeUpdate(); //execute prepared statement
+			int udpateFilmResult = prepStmt.executeUpdate(); // execute prepared statement
 
 			closeConnection();
 			b = true;
@@ -314,7 +312,7 @@ public enum FilmDAOEnum {
 	 * @return b Boolean of true to indicate completion.
 	 * @throws SQLException
 	 */
-	public boolean deleteFilm(int id) throws SQLException { //DELETE
+	public boolean deleteFilm(int id) throws SQLException { // DELETE
 
 		String deleteSQL = "DELETE FROM films WHERE id = ?;";
 		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.
