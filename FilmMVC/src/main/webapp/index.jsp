@@ -42,6 +42,8 @@
 				<th>Year</th>
 				<th>Director</th>
 				<th>Stars</th>
+				<th>Genre</th>
+				<th>Rating</th>
 				<th>Review</th>
 			</tr>
 
@@ -51,6 +53,8 @@
 					<td><em>${f.year}</em></td>
 					<td><em>${f.director}</em></td>
 					<td><em>${f.stars}</em></td>
+					<td><em>${f.genre}</em></td>
+					<td><em>${f.rating}</em></td>
 					<td><em>${f.review}</em></td>
 
 					<td><a href="./deleteFilm?id=${f.id}">Delete</a></td>

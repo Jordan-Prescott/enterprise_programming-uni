@@ -53,6 +53,16 @@
 							required>
 					</div>
 					<div class="form-group">
+						<label for="fGenre" class="mt-4">Genre</label> <input type="text"
+							class="form-control" name="genre" id="genre" value="${f.genre}"
+							required>
+					</div>
+					<div class="form-group">
+						<label for="fRating" class="mt-4">Rating</label> <input type="text"
+							class="form-control" name="rating" id="rating" value="${f.rating}"
+							required>
+					</div>
+					<div class="form-group">
 						<label for="fReview" class="mt-4">Review</label>
 						<textarea class="form-control" name="review" id="review" rows="3"
 							required>${f.review}</textarea>

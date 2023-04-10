@@ -80,6 +80,8 @@ public class createFilm extends HttpServlet {
 		f.setDirector(request.getParameter("director"));
 		f.setStars(request.getParameter("stars"));
 		f.setReview(request.getParameter("review"));
+		f.setGenre(request.getParameter("genre"));
+		f.setRating(request.getParameter("rating"));
 
 		try { // insert film
 			dao.insertFilm(f);

@@ -100,7 +100,7 @@ public enum FilmDAOEnum {
 	 */
 	public boolean insertFilm(Film f) throws SQLException { // CREATE
 
-		String insertSQL = "INSERT INTO films (title, year, director, stars, review) VALUES (?, ?, ?, ?, ?);";
+		String insertSQL = "INSERT INTO films (title, year, director, stars, review, genre, rating) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.
 
 		try {
@@ -111,6 +111,8 @@ public enum FilmDAOEnum {
 			prepStmt.setString(3, f.getDirector());
 			prepStmt.setString(4, f.getStars());
 			prepStmt.setString(5, f.getReview());
+			prepStmt.setString(6, f.getGenre());
+			prepStmt.setString(7, f.getRating());
 			System.out.println(prepStmt.toString());
 
 			int insertFilmResult = prepStmt.executeUpdate();
@@ -139,7 +141,7 @@ public enum FilmDAOEnum {
 		Film thisFilm = null;
 		try {
 			thisFilm = new Film(rs.getInt("id"), rs.getString("title"), rs.getInt("year"), rs.getString("director"),
-					rs.getString("stars"), rs.getString("review"));
+					rs.getString("stars"), rs.getString("review"), rs.getString("genre"), rs.getString("rating"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -244,7 +246,7 @@ public enum FilmDAOEnum {
 	 * @throws SQLException
 	 */
 	public boolean updateFilm(Film f) throws SQLException { // UPDATE
-		String insertSQL = "UPDATE films SET title=?, year=?, director=?, stars=?, review=? WHERE id=?;";
+		String insertSQL = "UPDATE films SET title=?, year=?, director=?, stars=?, review=?, genre=?, rating=? WHERE id=?;";
 		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.
 
 		try {
@@ -256,7 +258,9 @@ public enum FilmDAOEnum {
 			prepStmt.setString(3, f.getDirector());
 			prepStmt.setString(4, f.getStars());
 			prepStmt.setString(5, f.getReview());
-			prepStmt.setInt(6, f.getId());
+			prepStmt.setString(6, f.getGenre());
+			prepStmt.setString(7, f.getRating());
+			prepStmt.setInt(8, f.getId());
 			System.out.println(prepStmt.toString());
 
 			int udpateFilmResult = prepStmt.executeUpdate(); //execute prepared statement
