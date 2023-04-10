@@ -53,10 +53,12 @@ public class searchFilms extends HttpServlet {
 		
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 
-		Film f = new Film(); // constructor sets all variables to null
-		f.setTitle(request.getParameter("title"));
+//		Film f = new Film(); // constructor sets all variables to null
+//		f.setTitle(request.getParameter("title"));
 		
-		ArrayList<Film> allFilms = dao.searchFilms(f); // get films and store array
+		
+		
+		ArrayList<Film> allFilms = dao.searchFilms(request.getParameter("querySQL")); // get films and store array
 
 		request.setAttribute("films", allFilms);
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp"); // set dispatcher location

@@ -179,46 +179,75 @@ public enum FilmDAOEnum {
 
 		return filmsArray;
 	}
+	
+	/**
+	 * getFilm
+	 * 
+	 * 
+	 * 
+	 * @param f
+	 * @return
+	 */
+	public Film getFilm(Film f) { // READ
+		
+		String selectSQL = "SELECT * FROM films WHERE id = ?;";
+		
+		try {
+			openConnection(selectSQL);
+			
+			prepStmt.setInt(1, f.getId());
+			System.out.println(prepStmt.toString());
+			
+			ResultSet rs = prepStmt.executeQuery();
+			
+			System.out.println(rs);
+
+			while (rs.next()) {
+				oneFilm = getNextFilm(rs);
+			}
+
+			closeConnection();
+		} catch (SQLException se) {
+			System.out.println(se);
+		}
+		
+		return oneFilm;
+	}
 
 	/**
 	 * searchFilms
 	 * 
-	 * Takes parameter of Film object and uses details of Film to format an SQL
-	 * query and then execute the query against the DB. This retrieves a single film
-	 * entry from DB.
+	 * Takes parameter of String s a sql query and uses SQL OR to make string a dynamic
+	 * query and then execute the query against the DB. This retrieves any films the 
+	 * OR statements have triggered true. For example you can search for director name
+	 * or number of stars or the year and this will return everything found without
+	 * needing to heavily format the query.
 	 * 
 	 * @param f Film object that will be updated in DB.
 	 * @return oneFilm Film object of returned film from DB.
 	 * 
-	 *         TODO: This may not be needed or is needed in MVC return when you hit
-	 *         that for RESTAPI its not needed.
 	 */
-	public ArrayList<Film> searchFilms(Film f) { // READ
+	public ArrayList<Film> searchFilms(String s) { // READ
 
 		ArrayList<Film> filmsArray = new ArrayList<Film>();
 		
 		// format query depending what is passed in
-		String selectSQL = "SELECT * FROM films WHERE 1 = 1";
-		
-		if (f.getId() != 0) {
-			selectSQL += " AND id = ?";		
-		} else if (f.getTitle() != null) {
-			selectSQL += " AND title LIKE ?"; // like here wild cards SQL query 
-		}
-		selectSQL += ";"; // end of query
-
+		String selectSQL = "SELECT * FROM films WHERE id= ? OR title LIKE ? OR year= ? OR director LIKE ? OR stars LIKE ? OR genre = ? OR rating = ?;";
+	
 		try {	
 			openConnection(selectSQL);
 			
-			// adjust prepared statement based on what is passed in
-			if (f.getId() != 0) {
-				prepStmt.setInt(1, f.getId());	
-			} else if (f.getTitle() != null) {
-				prepStmt.setString(1, "%" + f.getTitle() + "%"); // percentage here wild cards SQL query
-			}
-			
+			// passes in string in all places and wildcards some for better results
+			prepStmt.setString(1, s);
+			prepStmt.setString(2, "%" + s + "%");
+			prepStmt.setString(3, s);
+			prepStmt.setString(4, "%" + s + "%");
+			prepStmt.setString(5, "%" + s + "%");
+			prepStmt.setString(6, s);
+			prepStmt.setString(7, s);
 			System.out.println(prepStmt);
-			ResultSet rs = prepStmt.executeQuery();
+			
+			ResultSet rs = prepStmt.executeQuery();	
 
 			while (rs.next()) {
 				oneFilm = getNextFilm(rs);

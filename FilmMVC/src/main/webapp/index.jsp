@@ -24,7 +24,7 @@
 		<!-- SEARCH -->
 		<form method="POST" action="./searchFilms" class="d-flex">
 			<input class="form-control me-sm-2" type="search"
-				placeholder="Search Title" name="title" id="title">
+				placeholder="e.g. ROBERT DE NIRO" name="querySQL" id="querySQL">
 			<button class="btn btn-secondary my-2 my-sm-0">Search</button>
 		</form>
 		
