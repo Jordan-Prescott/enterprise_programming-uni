@@ -45,7 +45,8 @@ public class updateFilm extends HttpServlet {
 	 * 
 	 * This doGet method retrieves a film object's details to be updated, sets the
 	 * attributes as request attributes, and forwards the request to the
-	 * updateFilm.jsp page with a pre-filled form for the user to update.
+	 * updateFilm.jsp page with a pre-filled form for the user to update. It uses
+	 * the funtion getFilm(f) as only one film is needed.
 	 * 
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -59,9 +60,9 @@ public class updateFilm extends HttpServlet {
 		Film f = new Film();
 		f.setId(Integer.parseInt(request.getParameter("id")));
 
-		ArrayList<Film> thisFilm = dao.searchFilms(f); // returns only one value
+		Film thisFilm = dao.getFilm(f);
 
-		request.setAttribute("film", thisFilm);
+		request.setAttribute("film", thisFilm); 
 		RequestDispatcher rd = request.getRequestDispatcher("./jsp_views/updateFilm.jsp"); // set dispatcher location
 		rd.include(request, response); // send values to updateFilm jsp
 

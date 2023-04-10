@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="model.Film" %>
 
 <!DOCTYPE html>
 <html>
@@ -27,45 +27,45 @@
 
 	<!-- FORM TO ADD FILM -->
 	<!-- NOTE: All fields required for as one way of data validation -->
-	<!-- NOTE: Although this loops through array only one entry will be returned: Back-end searches by unique id -->
-	<c:forEach items="${film}" var="f">
-		<form method="POST" action="./updateFilm?id=${f.id}">
+
+	<% Film f = (Film) request.getAttribute("film"); %>
+		<form method="POST" action="./updateFilm?id=<%= String.valueOf(f.getId()) %>">
 			<fieldset class="fieldset-updateFilm">
 				<div class="form-box">
 					<div class="form-group">
 						<label for="fTitle" class="mt-4">Title</label> <input type="text"
-							class="form-control" name="title" id="title" value="${f.title}"
+							class="form-control" name="title" id="title" value="<%= f.getTitle() %>"
 							required>
 					</div>
 					<div class="form-group">
 						<label for="fYear" class="mt-4">Year</label> <input type="number"
 							min="1888" class="form-control" name="year" id="year"
-							value="${f.year}" required>
+							value="<%= f.getYear() %>" required>
 					</div>
 					<div class="form-group">
 						<label for="fDirector" class="mt-4">Director</label> <input
 							type="text" class="form-control" name="director" id="director"
-							value="${f.director}" required>
+							value="<%= f.getDirector() %>" required>
 					</div>
 					<div class="form-group">
 						<label for="fStars" class="mt-4">Stars</label> <input type="text"
-							class="form-control" name="stars" id="stars" value="${f.stars}"
+							class="form-control" name="stars" id="stars" value="<%= f.getStars() %>"
 							required>
 					</div>
 					<div class="form-group">
 						<label for="fGenre" class="mt-4">Genre</label> <input type="text"
-							class="form-control" name="genre" id="genre" value="${f.genre}"
+							class="form-control" name="genre" id="genre" value="<%= f.getGenre() %>"
 							required>
 					</div>
 					<div class="form-group">
 						<label for="fRating" class="mt-4">Rating</label> <input type="text"
-							class="form-control" name="rating" id="rating" value="${f.rating}"
+							class="form-control" name="rating" id="rating" value="<%= f.getRating() %>"
 							required>
 					</div>
 					<div class="form-group">
 						<label for="fReview" class="mt-4">Review</label>
 						<textarea class="form-control" name="review" id="review" rows="3"
-							required>${f.review}</textarea>
+							required><%= f.getReview() %></textarea>
 					</div>
 					<br>
 					<button class="btn btn-primary">Update Film.</button>
@@ -73,7 +73,6 @@
 				</div>
 			</fieldset>
 		</form>
-	</c:forEach>
 
 </body>
 <!-- BODY END -->
