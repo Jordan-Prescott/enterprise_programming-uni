@@ -32,6 +32,9 @@ import model.Film;
  */
 public enum FilmDAOEnum {
 
+	/**
+	 * Singleton pattern.
+	 */
 	INSTANCE;
 
 	Film oneFilm = null;
@@ -41,12 +44,7 @@ public enum FilmDAOEnum {
 	String user = "admin";
 	String password = "Nsi5l3yT10ntaKEy";
 	String url = "jdbc:mysql://filmdb.c2qbiiku6kgb.eu-west-2.rds.amazonaws.com:3306/films?user="+user+"&password="+password;
-
-//	String user = "prescotj";
-//	String password = "tramkerL4";
-//	String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk:6306/" + user;
 	
-
 	/**
 	 * openConnection
 	 * 
@@ -100,9 +98,9 @@ public enum FilmDAOEnum {
 	 * query and then execute the query against the DB. This creates a single film
 	 * entry in DB.
 	 * 
-	 * @param f
-	 * @return
-	 * @throws SQLException
+	 * @param f Film object 
+	 * @return Boolean of true to indicate completion 
+	 * @throws SQLException Throws error connection fails to the DB.
 	 */
 	public boolean insertFilm(Film f) throws SQLException { // CREATE
 
@@ -223,15 +221,14 @@ public enum FilmDAOEnum {
 	/**
 	 * searchFilms
 	 * 
-	 * Takes parameter of String s a sql query and uses SQL OR to make string a
+	 * Takes parameter of String s a SQL query and uses SQL OR to make string a
 	 * dynamic query and then execute the query against the DB. This retrieves any
 	 * films the OR statements have triggered true. For example you can search for
 	 * director name or number of stars or the year and this will return everything
 	 * found without needing to heavily format the query.
 	 * 
-	 * @param f Film object that will be updated in DB.
-	 * @return oneFilm Film object of returned film from DB.
-	 * 
+	 * @param s String that will be queried against DB.
+	 * @return filmsArray List of films returned from query.
 	 */
 	public ArrayList<Film> searchFilms(String s) { // READ
 
@@ -276,11 +273,11 @@ public enum FilmDAOEnum {
 	 * 
 	 * @param f Film object that will be updated in DB.
 	 * @return b Boolean of true to indicate completion.
-	 * @throws SQLException
+	 * @throws SQLException Throws error connection fails to the DB.
 	 */
 	public boolean updateFilm(Film f) throws SQLException { // UPDATE
 		String insertSQL = "UPDATE films SET title=?, year=?, director=?, stars=?, review=?, genre=?, rating=? WHERE id=?;";
-		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.
+		Boolean b = false;
 
 		try {
 			openConnection(insertSQL);
@@ -314,14 +311,14 @@ public enum FilmDAOEnum {
 	 * query and then execute the query against the DB. This deletes a film entry in
 	 * DB.
 	 * 
-	 * @param f Film object that will be deleted from DB.
+	 * @param id Integer id of film in DB.
 	 * @return b Boolean of true to indicate completion.
-	 * @throws SQLException
+	 * @throws SQLException Throws error connection fails to the DB.
 	 */
 	public boolean deleteFilm(int id) throws SQLException { // DELETE
 
 		String deleteSQL = "DELETE FROM films WHERE id = ?;";
-		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.
+		Boolean b = false;
 
 		try {
 			openConnection(deleteSQL);

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="./styles/bootstrap.css">
+<link rel="stylesheet" href="./css/bootstrap.css">
 <meta charset="UTF-8">
 <title>Update Film</title>
 </head>

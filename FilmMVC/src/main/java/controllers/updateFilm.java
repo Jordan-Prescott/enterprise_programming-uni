@@ -63,7 +63,7 @@ public class updateFilm extends HttpServlet {
 		Film thisFilm = dao.getFilm(f);
 
 		request.setAttribute("film", thisFilm); 
-		RequestDispatcher rd = request.getRequestDispatcher("./jsp_views/updateFilm.jsp"); // set dispatcher location
+		RequestDispatcher rd = request.getRequestDispatcher("./pages/updateFilm.jsp"); // set dispatcher location
 		rd.include(request, response); // send values to updateFilm jsp
 
 	}

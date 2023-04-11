@@ -36,6 +36,9 @@ import model.Film;
 public class home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
     public home() { // constructor
         super();
     }
@@ -46,12 +49,12 @@ public class home extends HttpServlet {
 	 * This method retrieves film objects from a database using a DAO object. It
 	 * then stores these objects in an array and passes it to the index.jsp file for
 	 * rendering. The servlet separates data retrieval and presentation logic,
-	 * making it a more efficient way to handle web requests.
+	 * making it a more efficient way to handle web requests. This is the home view
+	 * for the application and renders all film entries.
 	 * 
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		ArrayList<Film> allFilms = dao.getAllFilms(); // get films and store array
@@ -60,6 +63,28 @@ public class home extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp"); // set dispatcher location
 		rd.include(request, response); // send values to index
 
+	}
+	
+	/**
+	 * doPost
+	 * 
+	 * This method retrieves film objects from a database using a DAO object. It
+	 * then stores these objects in an array and passes it to the index.jsp file for
+	 * rendering. This is used from in the search bar on index.jsp.
+	 * 
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
+		
+		String searchString = request.getParameter("searchString"); 
+		ArrayList<Film> Films = dao.searchFilms(searchString); // get all films that match this query 
+		
+		request.setAttribute("films", Films);
+		RequestDispatcher rd = request.getRequestDispatcher("index.jsp"); // set dispatcher location
+		rd.include(request, response); // send values to index
+		
 	}
 
 }

@@ -51,7 +51,7 @@ public class createFilm extends HttpServlet {
 			throws ServletException, IOException {
 
 		// redirect instantly
-		RequestDispatcher rd = request.getRequestDispatcher("./jsp_views/addFilm.jsp"); // set dispatcher location
+		RequestDispatcher rd = request.getRequestDispatcher("./pages/addFilm.jsp"); // set dispatcher location
 		rd.include(request, response); // send values to updateFilm jsp
 
 	}

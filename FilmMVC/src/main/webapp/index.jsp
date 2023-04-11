@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="./styles/bootstrap.css">
+<link rel="stylesheet" href="./css/bootstrap.css">
 <meta charset="UTF-8">
 <title>Film DB</title>
 </head>
@@ -22,9 +22,9 @@
 		</ul>
 		
 		<!-- SEARCH -->
-		<form method="POST" action="./searchFilms" class="d-flex">
+		<form method="POST" action="./home" class="d-flex">
 			<input class="form-control me-sm-2" type="search"
-				placeholder="e.g. ROBERT DE NIRO" name="querySQL" id="querySQL">
+				placeholder="e.g. ROBERT DE NIRO" name="searchString" id="searchString">
 			<button class="btn btn-secondary my-2 my-sm-0">Search</button>
 		</form>
 		
