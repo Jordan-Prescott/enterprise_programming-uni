@@ -75,7 +75,7 @@ public class FilmsAPI extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) // GET
 			throws ServletException, IOException {
 
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
@@ -161,7 +161,7 @@ public class FilmsAPI extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) // POST
 			throws ServletException, IOException {
 
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
@@ -233,7 +233,7 @@ public class FilmsAPI extends HttpServlet {
 	 * 
 	 */
 	@Override
-	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) // PUT
 			throws ServletException, IOException {
 
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
@@ -304,7 +304,7 @@ public class FilmsAPI extends HttpServlet {
 	 * 
 	 */
 	@Override
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) // DELETE
 			throws ServletException, IOException {
 
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
