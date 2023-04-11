@@ -22,12 +22,12 @@ import model.Film;
  *         identify.
  * 
  *         Create : insertFilm() 
- *         Read   : getNextFilm(), getAllFilms(), getFilm
+ *         Read : getNextFilm(), getAllFilms(), getFilm()
  *         Update : updateFilm() 
  *         Delete : deleteFilm
  * 
  * @version 1.0
- * @since 06/04/23
+ * @since 10/04/23
  *
  */
 public enum FilmDAOEnum {
@@ -38,9 +38,14 @@ public enum FilmDAOEnum {
 	Connection conn = null;
 	PreparedStatement prepStmt = null;
 
-	String user = "prescotj";
-	String password = "tramkerL4";
-	String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk:6306/" + user;
+	String user = "admin";
+	String password = "Nsi5l3yT10ntaKEy";
+	String url = "jdbc:mysql://filmdb.c2qbiiku6kgb.eu-west-2.rds.amazonaws.com:3306/films?user="+user+"&password="+password;
+
+//	String user = "prescotj";
+//	String password = "tramkerL4";
+//	String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk:6306/" + user;
+	
 
 	/**
 	 * openConnection
@@ -55,14 +60,15 @@ public enum FilmDAOEnum {
 	private void openConnection(String query) {
 		// loading jdbc driver for mysql
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			Class.forName("com.mysql.jdbc.Driver");
 		} catch (Exception e) {
+			e.printStackTrace();
 			System.out.println(e);
 		}
 
 		// connecting to database
 		try {
-			conn = DriverManager.getConnection(url, user, password);
+			conn = DriverManager.getConnection(url);
 			prepStmt = conn.prepareStatement(query);
 		} catch (SQLException se) {
 			System.out.println(se);
@@ -100,7 +106,7 @@ public enum FilmDAOEnum {
 	 */
 	public boolean insertFilm(Film f) throws SQLException { // CREATE
 
-		String insertSQL = "INSERT INTO films (title, year, director, stars, review) VALUES (?, ?, ?, ?, ?);";
+		String insertSQL = "INSERT INTO films (title, year, director, stars, review, genre, rating) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.
 
 		try {
@@ -111,6 +117,8 @@ public enum FilmDAOEnum {
 			prepStmt.setString(3, f.getDirector());
 			prepStmt.setString(4, f.getStars());
 			prepStmt.setString(5, f.getReview());
+			prepStmt.setString(6, f.getGenre());
+			prepStmt.setString(7, f.getRating());
 			System.out.println(prepStmt.toString());
 
 			int insertFilmResult = prepStmt.executeUpdate();
@@ -139,7 +147,7 @@ public enum FilmDAOEnum {
 		Film thisFilm = null;
 		try {
 			thisFilm = new Film(rs.getInt("id"), rs.getString("title"), rs.getInt("year"), rs.getString("director"),
-					rs.getString("stars"), rs.getString("review"));
+					rs.getString("stars"), rs.getString("review"), rs.getString("genre"), rs.getString("rating"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -179,43 +187,22 @@ public enum FilmDAOEnum {
 	}
 
 	/**
-	 * searchFilms
+	 * getFilm
 	 * 
-	 * Takes parameter of Film object and uses details of Film to format an SQL
-	 * query and then execute the query against the DB. This retrieves a single film
-	 * entry from DB.
+	 * COMMENT HERE!
 	 * 
-	 * @param f Film object that will be updated in DB.
-	 * @return oneFilm Film object of returned film from DB.
-	 * 
-	 *         TODO: This may not be needed or is needed in MVC return when you hit
-	 *         that for RESTAPI its not needed.
 	 */
-	public ArrayList<Film> searchFilms(Film f) { // READ
+	public ArrayList<Film> getFilm(Film f) { // READ
 
 		ArrayList<Film> filmsArray = new ArrayList<Film>();
-		
-		// format query depending what is passed in
-		String selectSQL = "SELECT * FROM films WHERE 1 = 1";
-		
-		if (f.getId() != 0) {
-			selectSQL += " AND id = ?";		
-		} else if (f.getTitle() != null) {
-			selectSQL += " AND title LIKE ?"; // like here wild cards SQL query 
-		}
-		selectSQL += ";"; // end of query
+		String selectSQL = "SELECT * FROM films WHERE id = ?;";
 
-		try {	
+		try { // get film from DB
 			openConnection(selectSQL);
-			
-			// adjust prepared statement based on what is passed in
-			if (f.getId() != 0) {
-				prepStmt.setInt(1, f.getId());	
-			} else if (f.getTitle() != null) {
-				prepStmt.setString(1, "%" + f.getTitle() + "%"); // percentage here wild cards SQL query
-			}
-			
-			System.out.println(prepStmt);
+
+			prepStmt.setInt(1, f.getId());
+			System.out.println(prepStmt.toString());
+
 			ResultSet rs = prepStmt.executeQuery();
 
 			while (rs.next()) {
@@ -227,10 +214,88 @@ public enum FilmDAOEnum {
 		} catch (SQLException se) {
 			System.out.println(se);
 		}
-		
+
 		return filmsArray;
 	}
 	
+	/**
+	 * getFilms
+	 * 
+	 * COMMENT HERE!
+	 * 
+	 */
+	public ArrayList<Film> getFilms(Film f) { // READ
+
+		ArrayList<Film> filmsArray = new ArrayList<Film>();
+		String selectSQL = "SELECT * FROM films WHERE 1 = 1";
+
+		try { // get film from DB
+			openConnection(selectSQL);
+
+			prepStmt.setString(1, "%" + f.getTitle() + "%");
+			System.out.println(prepStmt.toString());
+
+			ResultSet rs = prepStmt.executeQuery();
+
+			while (rs.next()) {
+				oneFilm = getNextFilm(rs);
+				filmsArray.add(oneFilm);
+			}
+
+			closeConnection();
+		} catch (SQLException se) {
+			System.out.println(se);
+		}
+
+		return filmsArray;
+	}
+
+	/**
+	 * searchFilms
+	 * 
+	 * Takes parameter of String s a sql query and uses SQL OR to make string a
+	 * dynamic query and then execute the query against the DB. This retrieves any
+	 * films the OR statements have triggered true. For example you can search for
+	 * director name or number of stars or the year and this will return everything
+	 * found without needing to heavily format the query.
+	 * 
+	 * @param f Film object that will be updated in DB.
+	 * @return oneFilm Film object of returned film from DB.
+	 * 
+	 */
+	public ArrayList<Film> searchFilms(String s) { // READ
+
+		ArrayList<Film> filmsArray = new ArrayList<Film>();
+
+		// format query depending what is passed in
+		String selectSQL = "SELECT * FROM films WHERE title LIKE ? OR year= ? OR director LIKE ? OR stars LIKE ? OR genre = ? OR rating = ?;";
+
+		try {
+			openConnection(selectSQL);
+
+			// passes in string in all places and wildcards some for better results
+			prepStmt.setString(1, "%" + s + "%");
+			prepStmt.setString(2, s);
+			prepStmt.setString(3, "%" + s + "%");
+			prepStmt.setString(4, "%" + s + "%");
+			prepStmt.setString(5, s);
+			prepStmt.setString(6, s);
+			System.out.println(prepStmt);
+
+			ResultSet rs = prepStmt.executeQuery();
+
+			while (rs.next()) {
+				oneFilm = getNextFilm(rs);
+				filmsArray.add(oneFilm);
+			}
+
+			closeConnection();
+		} catch (SQLException se) {
+			System.out.println(se);
+		}
+
+		return filmsArray;
+	}
 
 	/**
 	 * updateFilm
@@ -244,22 +309,24 @@ public enum FilmDAOEnum {
 	 * @throws SQLException
 	 */
 	public boolean updateFilm(Film f) throws SQLException { // UPDATE
-		String insertSQL = "UPDATE films SET title=?, year=?, director=?, stars=?, review=? WHERE id=?;";
+		String insertSQL = "UPDATE films SET title=?, year=?, director=?, stars=?, review=?, genre=?, rating=? WHERE id=?;";
 		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.
 
 		try {
 			openConnection(insertSQL);
 
-			//format SQL
+			// format SQL
 			prepStmt.setString(1, f.getTitle());
 			prepStmt.setInt(2, f.getYear());
 			prepStmt.setString(3, f.getDirector());
 			prepStmt.setString(4, f.getStars());
 			prepStmt.setString(5, f.getReview());
-			prepStmt.setInt(6, f.getId());
+			prepStmt.setString(6, f.getGenre());
+			prepStmt.setString(7, f.getRating());
+			prepStmt.setInt(8, f.getId());
 			System.out.println(prepStmt.toString());
 
-			int udpateFilmResult = prepStmt.executeUpdate(); //execute prepared statement
+			int udpateFilmResult = prepStmt.executeUpdate(); // execute prepared statement
 
 			closeConnection();
 			b = true;
@@ -281,7 +348,7 @@ public enum FilmDAOEnum {
 	 * @return b Boolean of true to indicate completion.
 	 * @throws SQLException
 	 */
-	public boolean deleteFilm(int id) throws SQLException { //DELETE
+	public boolean deleteFilm(int id) throws SQLException { // DELETE
 
 		String deleteSQL = "DELETE FROM films WHERE id = ?;";
 		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.

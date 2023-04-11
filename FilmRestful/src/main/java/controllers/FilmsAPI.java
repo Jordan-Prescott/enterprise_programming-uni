@@ -35,16 +35,14 @@ import database.FilmDAOEnum;
  *         films database (DB). Each method can handle data types of JSON, XML,
  *         or plain text. Plain text has its own data format see below.
  * 
- *         GET    : Returns all films in data format requested. 
- *         POST   : Creates film. 
- *         PUT    : Updates existing film using id to identify entry. 
- *         DELETE : Deletes existing film using id to identify entry.
+ *         GET : Returns all films in data format requested. POST : Creates
+ *         film. PUT : Updates existing film using id to identify entry. DELETE
+ *         : Deletes existing film using id to identify entry.
  * 
  * @apiNote Plain/ Text Data Format: # used as deliminator and each entry on new
  *          line. Example of 3 entries below.
  * 
- *          title#year#director#stars#review 
- *          title#year#director#stars#review
+ *          title#year#director#stars#review title#year#director#stars#review
  *          title#year#director#stars#review
  * 
  * 
@@ -80,43 +78,70 @@ public class FilmsAPI extends HttpServlet {
 
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		PrintWriter out = response.getWriter();
-		
 		String format = request.getHeader("Accept");
+
+		// used in tools such as postman
 		String id = request.getParameter("id");
 		String title = request.getParameter("title");
-		
+		String year = request.getParameter("year");
+		String stars = request.getParameter("stars");
+		String genre = request.getParameter("genre");
+		String rating = request.getParameter("rating");
+
+		// used in front end & postman
+		String searchString = request.getParameter("searchString");
+
 		ArrayList<Film> allFilms = null;
 		Film f = null;
-		
+
 		// collect entries for output depending on what is requested.
-		if(id != null) { // return single film
+		if (id != null) { // return single film
 			f = new Film();
-			
+
 			f.setId(Integer.parseInt(id));
-			allFilms = dao.searchFilms(f);
-			
-		} else if (title != null) { // return single or multiple films
+			allFilms = dao.getFilm(f); 
+
+		} else if (title != null) { // return single or multiple films for title
 			f = new Film();
-			
+
 			f.setTitle(title);
-			allFilms = dao.searchFilms(f);
+			allFilms = dao.getFilms(f); 
+		} else if (year != null) { // return all films in that year
+			f = new Film();
+
+			f.setYear(Integer.parseInt(year));
+			allFilms = dao.getFilms(f); 
+		} else if (stars != null) { // return all films star has been in 
+			f = new Film();
+
+			f.setTitle(title);
+			allFilms = dao.getFilms(f); 
+		} else if (genre != null) { // return all films in genre
+			f = new Film();
+
+			f.setTitle(rating);
+			allFilms = dao.getFilms(f); 
 			
+		} else if (searchString != null) { // return all films that fit search string
+
+			allFilms = dao.searchFilms(searchString);
+
 		} else { // return all films:
-			
+
 			allFilms = dao.getAllFilms();
-			
+
 		}
-		
+
 		// JSON: default output
 		Gson gson = new Gson();
 		response.setContentType("application/json");
 		String data = gson.toJson(allFilms);
-		
+
 		if (format.equals("application/xml")) { // XML
 			FilmList fl = new FilmList(allFilms);
 			StringWriter sw = new StringWriter();
 			JAXBContext context;
-			
+
 			try {
 				context = JAXBContext.newInstance(FilmList.class);
 				Marshaller m = context.createMarshaller();
@@ -126,24 +151,25 @@ public class FilmsAPI extends HttpServlet {
 				System.out.println(e);
 				e.printStackTrace();
 			}
-			
+
 			data = sw.toString();
-			
+
 		} else if (format.equals("text/plain")) { // TEXT
-			String textOutput = "id#title#year#director#stars#review#\n"; // Headers
-			
+			String textOutput = "id#title#year#director#stars#genre#rating#review#\n"; // Headers
+
 			for (Film f2 : allFilms) {
 				String row = String.format("%s#%s#%s#%s#%s#%s\n", String.valueOf(f2.getId()), f2.getTitle(),
-						String.valueOf(f2.getYear()), f2.getDirector(), f2.getStars(), f2.getReview());
+						String.valueOf(f2.getYear()), f2.getDirector(), f2.getStars(), f2.getGenre(), f2.getRating(),
+						f2.getReview());
 				textOutput += row;
 			}
-			
+
 			data = textOutput;
 		}
-		
+
 		if (allFilms.isEmpty()) {
-		    out.write("No results found.");
-		} else {			
+			out.write("No results found.");
+		} else {
 			out.write(data); // return content to client
 		}
 	}
@@ -198,6 +224,8 @@ public class FilmsAPI extends HttpServlet {
 				f.setDirector(values[2]);
 				f.setStars(values[3]);
 				f.setReview(values[4]);
+				f.setGenre(values[5]);
+				f.setRating(values[6]);
 
 				System.out.println(f);
 
