@@ -13,7 +13,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "film") // JAXB annotation: root element
 public class Film {
-	public Film(int id, String title, int year, String director, String stars, String review) {
+
+	public Film(int id, String title, int year, String director, String stars, String review, String genre, String rating) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -21,6 +22,9 @@ public class Film {
 		this.director = director;
 		this.stars = stars;
 		this.review = review;
+		this.genre = genre; // added for extra functionality
+		this.rating = rating; // added for extra functionality
+		
 	}
 
 	public Film() {
@@ -33,6 +37,8 @@ public class Film {
 	String director;
 	String stars;
 	String review;
+	String genre;
+	String rating;
 
 	public int getId() {
 		return id;
@@ -81,10 +87,27 @@ public class Film {
 	public void setReview(String review) {
 		this.review = review;
 	}
+	
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+	public String getRating() {
+		return rating;
+	}
+
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
+
 
 	@Override
 	public String toString() {
 		return "Film [id=" + id + ", title=" + title + ", year=" + year + ", director=" + director + ", stars=" + stars
-				+ ", review=" + review + "]";
+				+ ", review=" + review + ", genre=" + genre + ", rating=" + rating + "]";
 	}
 }
