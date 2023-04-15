@@ -237,21 +237,21 @@ public enum FilmDAOEnum {
 	public ArrayList<Film> getFilms(Film f) { // READ
 
 		ArrayList<Film> filmsArray = new ArrayList<Film>();
-		String selectSQL = "SELECT * FROM films WHERE 1 = 1"; // REMOVE THIS
+		String selectSQL = "SELECT * FROM films WHERE "; // REMOVE THIS
 
 		// format query
 		if (f.getTitle() != null) {
-			selectSQL += " AND title LIKE ?";
+			selectSQL += " title LIKE ?";
 		} else if (f.getDirector() != null) {
-			selectSQL += " AND Director = ?";
+			selectSQL += " Director = ?";
 		} else if (f.getYear() != 0) {
-			selectSQL += " AND year = ?";
+			selectSQL += " year = ?";
 		} else if (f.getStars() != null) {
-			selectSQL += " AND stars LIKE ?";
+			selectSQL += " stars LIKE ?";
 		} else if (f.getGenre() != null) {
-			selectSQL += " AND genre = ?";
+			selectSQL += " genre = ?";
 		}else if (f.getRating() != null) {
-			selectSQL += " AND rating = ?";
+			selectSQL += " rating = ?";
 		}
 		selectSQL += ";";
 		

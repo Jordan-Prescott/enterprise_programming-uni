@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="./css/bootstrap.css" rel="stylesheet">	
+<link href="./css/bootstrap.css" rel="stylesheet">
 <title>Film DB</title>
 </head>
 
@@ -10,22 +10,27 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 	<div class="container-fluid">
 
-		<a class="navbar-brand" href="./home">Film
-			DB</a>
+		<a class="navbar-brand" href="./home">Film DB</a>
 		<ul class="navbar-nav me-auto">
 			<li class="nav-item"><a class="btn btn-success"
 				href="./createFilm">Add Film</a></li>
-			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#"
-				role="button" aria-haspopup="true" aria-expanded="false">Format</a>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">JSON</a> <a class="dropdown-item"
-						href="#">XML</a> <a class="dropdown-item" href="#">TEXT</a>
-				</div></li>
 		</ul>
 		<form method="POST" action="./searchFilms" class="d-flex">
-			<input class="form-control me-sm-2" type="search"
-				placeholder="e.g. ROBERT DE NIRO" name="querySQL" id="querySQL">
+			<label for="format" class="form-label me-sm-2">Format:</label> <select
+				class="form-select me-sm-2" id="format">
+				<option>JSON</option>
+				<option>XML</option>
+				<option>TEXT</option>
+			</select> <label for="searchBy" class="form-label me-sm-2">Search:</label>
+			<select class="form-select me-sm-2" id="searchBy">
+				<option>Title</option>
+				<option>Year</option>
+				<option>Director</option>
+				<option>Stars</option>
+				<option>Genre</option>
+				<option>Rating</option>
+			</select> <input class="form-control me-sm-2" type="search"
+				placeholder="e.g. BATMAN" name="searchString" id="searchString">
 			<button class="btn btn-secondary">Search</button>
 		</form>
 
@@ -36,8 +41,7 @@
 <!-- BODY START -->
 <body>
 	<!-- FILMS TABLE -->
-	<div class="">
-		<table class="table table-hover">
+		<table class="table table-hover" id="tableOutput">
 			<tr>
 				<th>Title</th>
 				<th>Year</th>
@@ -46,26 +50,12 @@
 				<th>Genre</th>
 				<th>Rating</th>
 				<th>Review</th>
-			</tr>
-			<tr>
-				<td><em>Title</em></td>
-				<td><em>Year</em></td>
-				<td><em>Director</em></td>
-				<td><em>Stars</em></td>
-				<td><em>Genre</em></td>
-				<td><em>Rating</em></td>
-				<td><em>Review</em></td>
-
-				<td><a href="./deleteFilm?id=${f.id}">Delete</a></td>
-				<td><a href="./updateFilm?id=${f.id}">Update</a></td>
-			</tr>
 		</table>
-	</div>
 
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-	crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+		crossorigin="anonymous"></script>
 </body>
 <!-- BODY -->
 </html>
