@@ -41,9 +41,9 @@ public enum FilmDAOEnum {
 	Connection conn = null;
 	PreparedStatement prepStmt = null;
 
-	String user = "admin";
-	String password = "Nsi5l3yT10ntaKEy";
-	String url = "jdbc:mysql://filmdb.c2qbiiku6kgb.eu-west-2.rds.amazonaws.com:3306/films?user="+user+"&password="+password;
+	String user = "prescotj";
+	String password = "tramkerL4";
+	String url = "jdbc:mysql://mudfoot.doc.stu.mmu.ac.uk:6306/" + user;
 	
 	/**
 	 * openConnection
@@ -66,7 +66,7 @@ public enum FilmDAOEnum {
 
 		// connecting to database
 		try {
-			conn = DriverManager.getConnection(url);
+			conn = DriverManager.getConnection(url, user, password);
 			prepStmt = conn.prepareStatement(query);
 		} catch (SQLException se) {
 			System.out.println(se);
