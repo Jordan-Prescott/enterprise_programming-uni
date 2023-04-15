@@ -69,7 +69,7 @@ public enum FilmDAOEnum {
 			conn = DriverManager.getConnection(url, user, password);
 			prepStmt = conn.prepareStatement(query);
 		} catch (SQLException se) {
-			System.out.println(se);
+			se.printStackTrace();
 		}
 	}
 
@@ -86,8 +86,8 @@ public enum FilmDAOEnum {
 			if (conn != null) {
 				conn.close();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			se.printStackTrace();
 		}
 	}
 
@@ -105,7 +105,7 @@ public enum FilmDAOEnum {
 	public boolean insertFilm(Film f) throws SQLException { // CREATE
 
 		String insertSQL = "INSERT INTO films (title, year, director, stars, review, genre, rating) VALUES (?, ?, ?, ?, ?, ?, ?);";
-		Boolean b = false; // TODO: Check if needed: Used in Kaleems code.
+		Boolean b = false;
 
 		try {
 			openConnection(insertSQL);
@@ -124,7 +124,7 @@ public enum FilmDAOEnum {
 			closeConnection();
 			b = true;
 		} catch (SQLException se) {
-			System.out.println(se);
+			se.printStackTrace();
 			throw new SQLException("Film Not Added.");
 		}
 
@@ -146,8 +146,8 @@ public enum FilmDAOEnum {
 		try {
 			thisFilm = new Film(rs.getInt("id"), rs.getString("title"), rs.getInt("year"), rs.getString("director"),
 					rs.getString("stars"), rs.getString("review"), rs.getString("genre"), rs.getString("rating"));
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			se.printStackTrace();
 		}
 		return thisFilm;
 	}
@@ -178,7 +178,7 @@ public enum FilmDAOEnum {
 
 			closeConnection();
 		} catch (SQLException se) {
-			System.out.println(se);
+			se.printStackTrace();
 		}
 
 		return filmsArray;
@@ -212,7 +212,7 @@ public enum FilmDAOEnum {
 
 			closeConnection();
 		} catch (SQLException se) {
-			System.out.println(se);
+			se.printStackTrace();
 		}
 
 		return oneFilm;
@@ -258,7 +258,7 @@ public enum FilmDAOEnum {
 
 			closeConnection();
 		} catch (SQLException se) {
-			System.out.println(se);
+			se.printStackTrace();
 		}
 
 		return filmsArray;
@@ -297,8 +297,8 @@ public enum FilmDAOEnum {
 
 			closeConnection();
 			b = true;
-		} catch (SQLException s) {
-			System.out.println(s);
+		} catch (SQLException se) {
+			se.printStackTrace();
 			throw new SQLException("Film Not Updated.");
 		}
 		return b;
@@ -331,7 +331,8 @@ public enum FilmDAOEnum {
 
 			closeConnection();
 			b = true;
-		} catch (SQLException s) {
+		} catch (SQLException se) {
+			se.printStackTrace();
 			throw new SQLException("Film Not Deleted.");
 		}
 
