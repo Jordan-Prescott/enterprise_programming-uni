@@ -83,6 +83,7 @@ public class FilmsAPI extends HttpServlet {
 		// used in tools such as postman
 		String id = request.getParameter("id");
 		String title = request.getParameter("title");
+		String director = request.getParameter("director");
 		String year = request.getParameter("year");
 		String stars = request.getParameter("stars");
 		String genre = request.getParameter("genre");
@@ -100,28 +101,36 @@ public class FilmsAPI extends HttpServlet {
 
 			f.setId(Integer.parseInt(id));
 			allFilms = dao.getFilm(f); 
-
 		} else if (title != null) { // return single or multiple films for title
 			f = new Film();
 
-			f.setTitle(title);
+			f.setTitle(title); // title
+			allFilms = dao.getFilms(f); 
+		} else if (director != null) { // return single or multiple films for title
+			f = new Film();
+
+			f.setDirector(director); // director
 			allFilms = dao.getFilms(f); 
 		} else if (year != null) { // return all films in that year
 			f = new Film();
 
-			f.setYear(Integer.parseInt(year));
+			f.setYear(Integer.parseInt(year)); // year
 			allFilms = dao.getFilms(f); 
 		} else if (stars != null) { // return all films star has been in 
 			f = new Film();
 
-			f.setTitle(title);
+			f.setStars(stars); // stars
 			allFilms = dao.getFilms(f); 
 		} else if (genre != null) { // return all films in genre
 			f = new Film();
 
-			f.setTitle(rating);
+			f.setGenre(genre); // genre
 			allFilms = dao.getFilms(f); 
-			
+		} else if (rating != null) { // return all films in genre
+			f = new Film();
+
+			f.setRating(rating); // rating
+			allFilms = dao.getFilms(f); 
 		} else if (searchString != null) { // return all films that fit search string
 
 			allFilms = dao.searchFilms(searchString);
@@ -158,7 +167,7 @@ public class FilmsAPI extends HttpServlet {
 			String textOutput = "id#title#year#director#stars#genre#rating#review#\n"; // Headers
 
 			for (Film f2 : allFilms) {
-				String row = String.format("%s#%s#%s#%s#%s#%s\n", String.valueOf(f2.getId()), f2.getTitle(),
+				String row = String.format("%s#%s#%s#%s#%s#%s#%s#%s\n", String.valueOf(f2.getId()), f2.getTitle(),
 						String.valueOf(f2.getYear()), f2.getDirector(), f2.getStars(), f2.getGenre(), f2.getRating(),
 						f2.getReview());
 				textOutput += row;
