@@ -6,7 +6,8 @@ The Model component is responsible for managing the data, while the View compone
 handles the communication between the Model and View components and processes user requests.
 
 ##Instructions
-To run this program import it into your eclipse environment when you have done so please ensure you have Tomcat server 9 installed. Right click on the root folder 'FilmMVC' > Run As > Run on Server.
+To run this program import it into your eclipse environment when you have done so please ensure you have Tomcat server 9 installed. Right click on the root folder 'FilmMVC' > Run As > Run on Server. This should run the program on your machine at http://localhost:8080/FilmMVC
+if when you load this program and no film entries appear please select the 'Film DB' or append /home to the end of url and this will load the entries. 
 
 ##Usage
 #####Adding A Film.
