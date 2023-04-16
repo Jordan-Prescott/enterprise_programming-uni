@@ -46,8 +46,8 @@ import database.FilmDAOEnum;
  *          title#year#director#stars#review
  * 
  * 
- * @version 1.0
- * @since 06/04/23
+ * @version 1.1
+ * @since 15/04/23
  * 
  */
 @WebServlet("/FilmsAPI")
@@ -78,64 +78,24 @@ public class FilmsAPI extends HttpServlet {
 
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		PrintWriter out = response.getWriter();
+
 		String format = request.getHeader("Accept");
-
-		// used in tools such as postman
-		String id = request.getParameter("id");
-		String title = request.getParameter("title");
-		String director = request.getParameter("director");
-		String year = request.getParameter("year");
-		String stars = request.getParameter("stars");
-		String genre = request.getParameter("genre");
-		String rating = request.getParameter("rating");
-
-		// used in front end & postman
 		String searchString = request.getParameter("searchString");
+		String searchBy = request.getParameter("searchBy");
 
 		ArrayList<Film> allFilms = null;
-		Film f = null;
 
-		// collect entries for output depending on what is requested.
-		if (id != null) { // return single film
-			f = new Film();
+		if (searchBy != null && !restfulAPIUtils.validateQuery(searchBy)) { // invalid request
+			out.write("ERROR: The searchBy parameter was invalid, please check documentation for "
+					+ "valid criteria and try your request again.");
+			
+		} else if (searchString != null) { 
+			
+			String preparedSearchString = restfulAPIUtils.prePrepareStatement(searchString, searchBy);
+																
+			allFilms = dao.searchFilmsBy(preparedSearchString, searchBy); // return films that fit query
 
-			f.setId(Integer.parseInt(id));
-			allFilms = dao.getFilm(f); 
-		} else if (title != null) { // return single or multiple films for title
-			f = new Film();
-
-			f.setTitle(title); // title
-			allFilms = dao.getFilms(f); 
-		} else if (director != null) { // return single or multiple films for title
-			f = new Film();
-
-			f.setDirector(director); // director
-			allFilms = dao.getFilms(f); 
-		} else if (year != null) { // return all films in that year
-			f = new Film();
-
-			f.setYear(Integer.parseInt(year)); // year
-			allFilms = dao.getFilms(f); 
-		} else if (stars != null) { // return all films star has been in 
-			f = new Film();
-
-			f.setStars(stars); // stars
-			allFilms = dao.getFilms(f); 
-		} else if (genre != null) { // return all films in genre
-			f = new Film();
-
-			f.setGenre(genre); // genre
-			allFilms = dao.getFilms(f); 
-		} else if (rating != null) { // return all films in genre
-			f = new Film();
-
-			f.setRating(rating); // rating
-			allFilms = dao.getFilms(f); 
-		} else if (searchString != null) { // return all films that fit search string
-
-			allFilms = dao.searchFilms(searchString);
-
-		} else { // return all films:
+		} else { // return all films 
 
 			allFilms = dao.getAllFilms();
 
@@ -166,10 +126,10 @@ public class FilmsAPI extends HttpServlet {
 		} else if (format.equals("text/plain")) { // TEXT
 			String textOutput = "id#title#year#director#stars#genre#rating#review#\n"; // Headers
 
-			for (Film f2 : allFilms) {
-				String row = String.format("%s#%s#%s#%s#%s#%s#%s#%s\n", String.valueOf(f2.getId()), f2.getTitle(),
-						String.valueOf(f2.getYear()), f2.getDirector(), f2.getStars(), f2.getGenre(), f2.getRating(),
-						f2.getReview());
+			for (Film f : allFilms) {
+				String row = String.format("%s#%s#%s#%s#%s#%s#%s#%s\n", String.valueOf(f.getId()), f.getTitle(),
+						String.valueOf(f.getYear()), f.getDirector(), f.getStars(), f.getGenre(), f.getRating(),
+						f.getReview());
 				textOutput += row;
 			}
 
@@ -244,7 +204,7 @@ public class FilmsAPI extends HttpServlet {
 																					// incorrectly
 			System.out.println(e);
 			e.printStackTrace();
-			out.write("[ERROR: 400 Bad Request] The data you sent was incorrectly formatted and cannot be processed. "
+			out.write("ERROR: 400 Bad Request. The data you sent was incorrectly formatted and cannot be processed. "
 					+ "Please check the data and try again.");
 		}
 
@@ -314,7 +274,7 @@ public class FilmsAPI extends HttpServlet {
 																					// incorrectly
 			System.out.println(e);
 			e.printStackTrace();
-			out.write("[ERROR: 400 Bad Request] The data you sent was incorrectly formatted and cannot be processed. "
+			out.write("ERROR: 400 Bad Request. The data you sent was incorrectly formatted and cannot be processed. "
 					+ "Please check the data and try again."); // Better formatted message for client
 		}
 
@@ -324,7 +284,7 @@ public class FilmsAPI extends HttpServlet {
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-			out.write("[ERROR] film not udpated please check the data and try again.");
+			out.write("ERROR: film not udpated please check the data and try again.");
 		}
 
 	}
@@ -385,7 +345,7 @@ public class FilmsAPI extends HttpServlet {
 																					// incorrectly
 			System.out.println(e);
 			e.printStackTrace();
-			out.write("[ERROR: 400 Bad Request] The data you sent was incorrectly formatted and cannot be processed. "
+			out.write("ERROR: 400 Bad Request. The data you sent was incorrectly formatted and cannot be processed. "
 					+ "Please check the data and try again.");
 		}
 
@@ -395,7 +355,7 @@ public class FilmsAPI extends HttpServlet {
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
-			out.write("[ERROR] film not deleted please check the data and try again.");
+			out.write("ERROR: film not deleted please check the data and try again.");
 		}
 		out.close();
 	}

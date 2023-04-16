@@ -22,7 +22,7 @@ import model.Film;
  *         identify.
  * 
  *         Create : insertFilm() 
- *         Read : getNextFilm(), getAllFilms(), getFilm()
+ *         Read   : getNextFilm(), getAllFilms(), getFilm(), searchFilmsBy
  *         Update : updateFilm() 
  *         Delete : deleteFilm
  * 
@@ -70,7 +70,7 @@ public enum FilmDAOEnum {
 			conn = DriverManager.getConnection(url, user, password);
 			prepStmt = conn.prepareStatement(query);
 		} catch (SQLException se) {
-			System.out.println(se);
+			se.printStackTrace();
 		}
 	}
 
@@ -87,8 +87,8 @@ public enum FilmDAOEnum {
 			if (conn != null) {
 				conn.close();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			se.printStackTrace();
 		}
 	}
 
@@ -125,7 +125,7 @@ public enum FilmDAOEnum {
 			closeConnection();
 			b = true;
 		} catch (SQLException se) {
-			System.out.println(se);
+			se.printStackTrace();
 			throw new SQLException("Film Not Added.");
 		}
 
@@ -147,8 +147,8 @@ public enum FilmDAOEnum {
 		try {
 			thisFilm = new Film(rs.getInt("id"), rs.getString("title"), rs.getInt("year"), rs.getString("director"),
 					rs.getString("stars"), rs.getString("review"), rs.getString("genre"), rs.getString("rating"));
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException se) {
+			se.printStackTrace();
 		}
 		return thisFilm;
 	}
@@ -179,7 +179,7 @@ public enum FilmDAOEnum {
 
 			closeConnection();
 		} catch (SQLException se) {
-			System.out.println(se);
+			se.printStackTrace();
 		}
 
 		return filmsArray;
@@ -195,7 +195,7 @@ public enum FilmDAOEnum {
 	 * @param f Film object
 	 * @return filmsArray Array of films but as the query is by id only one value returned
 	 */
-	public ArrayList<Film> getFilm(Film f) { // READ
+	public ArrayList<Film> getFilm(Film f) { // READ TODO: NO LONGER NEEDED KEEPING JUST IN CASE FOR NOW BUT REMOVE AT END OF PROJECT
 
 		ArrayList<Film> filmsArray = new ArrayList<Film>();
 		String selectSQL = "SELECT * FROM films WHERE id = ?;";
@@ -216,143 +216,39 @@ public enum FilmDAOEnum {
 
 			closeConnection();
 		} catch (SQLException se) {
-			System.out.println(se);
-		}
-
-		return filmsArray;
-	}
-	
-	/**
-	 * getFilms
-	 * 
-	 * This method takes in a Film object and uses the get methods to get 
-	 * the values to query on. The query is formatted for what is passed in
-	 * and returns all films that match that query. This method can return 
-	 * multiple films as values such as film title can be used across multiple
-	 * films e.g 'BATMAN' and 'CANDYMAN 2'.
-	 * 
-	 * @param f Film Object
-	 * @return filmsArray Array of films returned from query to DB.
-	 */
-	public ArrayList<Film> getFilms(Film f) { // READ
-
-		ArrayList<Film> filmsArray = new ArrayList<Film>();
-		String selectSQL = "SELECT * FROM films WHERE "; // REMOVE THIS
-
-		// format query
-		if (f.getTitle() != null) {
-			selectSQL += " title LIKE ?";
-		} else if (f.getDirector() != null) {
-			selectSQL += " Director = ?";
-		} else if (f.getYear() != 0) {
-			selectSQL += " year = ?";
-		} else if (f.getStars() != null) {
-			selectSQL += " stars LIKE ?";
-		} else if (f.getGenre() != null) {
-			selectSQL += " genre = ?";
-		}else if (f.getRating() != null) {
-			selectSQL += " rating = ?";
-		}
-		selectSQL += ";";
-		
-		try { // get film from DB
-			openConnection(selectSQL);
-
-			// format query - set the correct value in prepStmt
-			if (f.getTitle() != null) {
-				prepStmt.setString(1, "%" + f.getTitle() + "%");
-			} else if (f.getDirector() != null) {
-				prepStmt.setString(1, f.getDirector());
-			} else if (f.getYear() != 0) {
-				prepStmt.setInt(1, f.getYear());
-			} else if (f.getStars() != null) {
-				prepStmt.setString(1, "%" + f.getStars() + "%");
-			} else if (f.getGenre() != null) {
-				prepStmt.setString(1, f.getGenre());
-			}else if (f.getRating() != null) {
-				prepStmt.setString(1, f.getRating());
-			}
-			
-			System.out.println(prepStmt.toString());
-
-			ResultSet rs = prepStmt.executeQuery();
-
-			while (rs.next()) {
-				oneFilm = getNextFilm(rs);
-				filmsArray.add(oneFilm);
-			}
-
-			closeConnection();
-		} catch (SQLException se) {
-			System.out.println(se);
+			se.printStackTrace();
 		}
 
 		return filmsArray;
 	}
 
 	/**
-	 * searchFilms
+	 * searchFilmsBy 
 	 * 
-	 * Takes parameter of String s a sql query and uses SQL OR to make string a
-	 * dynamic query and then execute the query against the DB. This retrieves any
-	 * films the OR statements have triggered true. For example you can search for
-	 * director name or number of stars or the year and this will return everything
-	 * found without needing to heavily format the query.
 	 * 
-	 * @param f Film object that will be updated in DB.
-	 * @return oneFilm Film object of returned film from DB.
-	 */
-	public ArrayList<Film> searchFilms(String s) { // READ
-
-		ArrayList<Film> filmsArray = new ArrayList<Film>();
-
-		// format query depending what is passed in
-		String selectSQL = "SELECT * FROM films WHERE title LIKE ? OR year= ? OR director LIKE ? OR stars LIKE ? OR genre = ? OR rating = ?;";
-
-		try {
-			openConnection(selectSQL);
-
-			// passes in string in all places and wildcards some for better results
-			prepStmt.setString(1, "%" + s + "%");
-			prepStmt.setString(2, s);
-			prepStmt.setString(3, "%" + s + "%");
-			prepStmt.setString(4, "%" + s + "%");
-			prepStmt.setString(5, s);
-			prepStmt.setString(6, s);
-			System.out.println(prepStmt);
-
-			ResultSet rs = prepStmt.executeQuery();
-
-			while (rs.next()) {
-				oneFilm = getNextFilm(rs);
-				filmsArray.add(oneFilm);
-			}
-
-			closeConnection();
-		} catch (SQLException se) {
-			System.out.println(se);
-		}
-
-		return filmsArray;
-	}
-	
+	 * COMMENT HERE
+	 * 
+	 * Takes parameter of String s a SQL query and String column and queries the 
+	 * database on the criteria (c) in the column of (column). This then returns 
+	 * all values as a list
+	 * 
+	 * @param s Value use is looking for such as 'Batman'
+	 * @param column The column which the user wants to search such as title
+	 * @return filmsArray Array of film objects returned from database
+	 */	
 	public ArrayList<Film> searchFilmsBy(String s, String column) { // READ
 		
 		ArrayList<Film> filmsArray = new ArrayList<Film>();
 		
 		// format query depending what is passed in
-		String selectSQL = "SELECT * FROM films WHERE ? LIKE ?;";
+		String selectSQL = "SELECT * FROM films WHERE " + column + " LIKE ?;";
 		
 		try {
 			openConnection(selectSQL);
 			
 			// passes in string in all places and wildcards some for better results
-			prepStmt.setString(1, "%" + s + "%");
-			prepStmt.setString(2, s);
-			prepStmt.setString(3, "%" + s + "%");
-			prepStmt.setString(4, "%" + s + "%");
-			prepStmt.setString(5, s);
-			prepStmt.setString(6, s);
+			prepStmt.setString(1, s);
+		
 			System.out.println(prepStmt);
 			
 			ResultSet rs = prepStmt.executeQuery();
@@ -364,7 +260,7 @@ public enum FilmDAOEnum {
 			
 			closeConnection();
 		} catch (SQLException se) {
-			System.out.println(se);
+			se.printStackTrace();
 		}
 		
 		return filmsArray;
@@ -403,8 +299,8 @@ public enum FilmDAOEnum {
 
 			closeConnection();
 			b = true;
-		} catch (SQLException s) {
-			System.out.println(s);
+		} catch (SQLException se) {
+			se.printStackTrace();
 			throw new SQLException("Film Not Updated.");
 		}
 		return b;
@@ -437,7 +333,8 @@ public enum FilmDAOEnum {
 
 			closeConnection();
 			b = true;
-		} catch (SQLException s) {
+		} catch (SQLException se) {
+			se.printStackTrace();
 			throw new SQLException("Film Not Deleted.");
 		}
 
