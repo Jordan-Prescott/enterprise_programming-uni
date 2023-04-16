@@ -111,14 +111,15 @@
 			]
 		},
 		{
-			"name": "Get Film By ID",
+			"name": "Search Films",
 			"request": {
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept",
 						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					},
 					{
 						"key": "Accept",
@@ -134,7 +135,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/FilmRestful/FilmsAPI?id=10001",
+					"raw": "http://localhost:8080/FilmRestful/FilmsAPI?searchBy=title&searchString=Batman",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -146,16 +147,20 @@
 					],
 					"query": [
 						{
-							"key": "id",
-							"value": "10001"
+							"key": "searchBy",
+							"value": "title"
+						},
+						{
+							"key": "searchString",
+							"value": "Batman"
 						}
 					]
 				},
-				"description": "This REST API endpoint allows users to retrieve a specific film from a database by specifying its ID. The endpoint supports three different response formats, namely JSON, XML, and TEXT, which can be specified by the user through the 'Accept' header. To retrieve a specific film, the user must include a query parameter of 'id' in their request, which will be used to identify the film in the database. The film entry will then be return in the format the user has chosen."
+				"description": "This Rest API endpoint allows users to retrieve a series of films in the format they require by adding a header Accept with the data format they want. The API supports two query parameters of searchBy and searchString. searchBy is the what type of data you are querying this includes id, title, year, director, stars, genre adn rating. searchString is the value you are. looking for such as the title of 'Batman'. The resulting films will be returned in the requested format, whether it be JSON, XML, or TEXT."
 			},
 			"response": [
 				{
-					"name": "Get Film By ID",
+					"name": "Get Films",
 					"originalRequest": {
 						"method": "GET",
 						"header": [
@@ -178,7 +183,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/FilmRestful/FilmsAPI?id=10001",
+							"raw": "http://localhost:8080/FilmRestful/FilmsAPI?searchBy=title&searchString=Batman",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -190,176 +195,12 @@
 							],
 							"query": [
 								{
-									"key": "id",
-									"value": "10001"
-								}
-							]
-						}
-					},
-					"status": "OK",
-					"code": 200,
-					"_postman_previewlanguage": "json",
-					"header": [
-						{
-							"key": "Content-Type",
-							"value": "application/json;charset=ISO-8859-1"
-						},
-						{
-							"key": "Content-Length",
-							"value": "564"
-						},
-						{
-							"key": "Date",
-							"value": "Thu, 13 Apr 2023 11:45:05 GMT"
-						},
-						{
-							"key": "Keep-Alive",
-							"value": "timeout=20"
-						},
-						{
-							"key": "Connection",
-							"value": "keep-alive"
-						}
-					],
-					"cookie": [],
-					"body": "[\n    {\n        \"id\": 10001,\n        \"title\": \"1492 - CONQUEST OF PARADISE\",\n        \"year\": 1992,\n        \"director\": \"RIDLEY SCOTT\",\n        \"stars\": \"GERARD DEPARDIEU, ARMAND ASSANTE\",\n        \"review\": \"The story of Columbus discovering America, beautifully shot in Costa Rica and excellently played by an top-notch cast including Tcheky Karyo, Michael Wincott and Sigourney Weaver as the Queen of Spain. Interestingly the script shows Columbus mercenary side by detailing the deals he wanted in return for discovering this new world before eventually having to return home in disgrace.\",\n        \"genre\": \"Thriller\",\n        \"rating\": \"*****\"\n    }\n]"
-				}
-			]
-		},
-		{
-			"name": "Get Films",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "text",
-						"disabled": true
-					},
-					{
-						"key": "Accept",
-						"value": "application/xml",
-						"type": "text",
-						"disabled": true
-					},
-					{
-						"key": "Accept",
-						"value": "text/plain",
-						"type": "text",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/FilmRestful/FilmsAPI?title=BATMAN",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"FilmRestful",
-						"FilmsAPI"
-					],
-					"query": [
-						{
-							"key": "title",
-							"value": "BATMAN"
-						},
-						{
-							"key": "year",
-							"value": "1992",
-							"disabled": true
-						},
-						{
-							"key": "director",
-							"value": "RIDLEY SCOTT",
-							"disabled": true
-						},
-						{
-							"key": "stars",
-							"value": "Robert De Niro",
-							"disabled": true
-						},
-						{
-							"key": "genre",
-							"value": "horror",
-							"disabled": true
-						},
-						{
-							"key": "rating",
-							"value": "*****",
-							"disabled": true
-						}
-					]
-				},
-				"description": "This Rest API endpoint allows users to retrieve a series of films in the format they require by adding a header Accept with the data format they want. The API supports query parameters of title, year, director, stars, genre, and rating. However, at present, only one parameter can be used per request. By specifying the desired parameter, users can filter the results to get films that match the specified criteria. The resulting films will be returned in the requested format, whether it be JSON, XML, or TEXT."
-			},
-			"response": [
-				{
-					"name": "Get Films",
-					"originalRequest": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "Accept",
-								"value": "application/xml",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "Accept",
-								"value": "text/plain",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/FilmRestful/FilmsAPI?title=BATMAN",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"FilmRestful",
-								"FilmsAPI"
-							],
-							"query": [
-								{
-									"key": "title",
-									"value": "BATMAN"
+									"key": "searchBy",
+									"value": "title"
 								},
 								{
-									"key": "year",
-									"value": "1992",
-									"disabled": true
-								},
-								{
-									"key": "director",
-									"value": "RIDLEY SCOTT",
-									"disabled": true
-								},
-								{
-									"key": "stars",
-									"value": "Robert De Niro",
-									"disabled": true
-								},
-								{
-									"key": "genre",
-									"value": "horror",
-									"disabled": true
-								},
-								{
-									"key": "rating",
-									"value": "*****",
-									"disabled": true
+									"key": "searchString",
+									"value": "Batman"
 								}
 							]
 						}
@@ -378,7 +219,7 @@
 						},
 						{
 							"key": "Date",
-							"value": "Thu, 13 Apr 2023 11:45:15 GMT"
+							"value": "Sun, 16 Apr 2023 12:31:08 GMT"
 						},
 						{
 							"key": "Keep-Alive",
@@ -419,7 +260,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\" : \"Enterprise Programming\",\n    \"year\": 2023,\n    \"director\": \"Mohammed Kaleem\",\n    \"stars\": \"Pupils\",\n    \"review\": \"Best unit ever done at uni and Kaleems directing skills are on another level.\",\n    \"genre\": \"Adventure\",\n    \"rating\": \"*****\"\n}",
+					"raw": "{\n    \"title\" : \"The Journey of Degree Apprentice\",\n    \"year\": 2023,\n    \"director\": \"Jordan Prescott\",\n    \"stars\": \"Jordan Prescott\",\n    \"review\": \"The film about a degree apprentice that works 4 days a week and studies one day, with the main character Jordan Prescott overcoming the challenges of his job and degree, is a heartfelt and action-packed movie. The audience is able to connect with Jordan and root for him throughout the film. The portrayal of his struggles in balancing work and study, as well as his determination to succeed, is inspiring and relatable. The movie offers an authentic look into the life of a degree apprentice, and is recommended for anyone who is pursuing a similar path. Overall, the film delivers an engaging and entertaining story with a positive message of perseverance and hard work.\",\n    \"genre\": \"Adventure\",\n    \"rating\": \"*****\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -466,7 +307,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\" : \"Enterprise Programming\",\n    \"year\": 2023,\n    \"director\": \"Mohammed Kaleem\",\n    \"stars\": \"Pupils\",\n    \"review\": \"Best unit ever done at uni and Kaleems directing skills are on another level.\",\n    \"genre\": \"Adventure\",\n    \"rating\": \"*****\"\n}",
+							"raw": "{\n    \"title\" : \"The Journey of Degree Apprentice\",\n    \"year\": 2023,\n    \"director\": \"Jordan Prescott\",\n    \"stars\": \"Jordan Prescott\",\n    \"review\": \"The film about a degree apprentice that works 4 days a week and studies one day, with the main character Jordan Prescott overcoming the challenges of his job and degree, is a heartfelt and action-packed movie. The audience is able to connect with Jordan and root for him throughout the film. The portrayal of his struggles in balancing work and study, as well as his determination to succeed, is inspiring and relatable. The movie offers an authentic look into the life of a degree apprentice, and is recommended for anyone who is pursuing a similar path. Overall, the film delivers an engaging and entertaining story with a positive message of perseverance and hard work.\",\n    \"genre\": \"Adventure\",\n    \"rating\": \"*****\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -496,7 +337,7 @@
 						},
 						{
 							"key": "Date",
-							"value": "Thu, 13 Apr 2023 11:48:33 GMT"
+							"value": "Sun, 16 Apr 2023 12:53:41 GMT"
 						},
 						{
 							"key": "Keep-Alive",
@@ -537,7 +378,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": 10001,\n    \"title\": \"Development Project\",\n    \"year\": 2023,\n    \"director\": \"Jordan Prescott\",\n    \"stars\": \"Jordan Prescott\",\n    \"review\": \"What a shocker.\",\n    \"genre\": \"Horror\",\n    \"rating\": \"*\"\n}",
+					"raw": "{\n    \"id\": 11313,\n    \"title\" : \"The Journey of Degree Apprentice\",\n    \"year\": 2023,\n    \"director\": \"Jordan Prescott\",\n    \"stars\": \"Jordan Prescott, dr Mohammed Kaleem, Fourteen IP Employees\",\n    \"review\": \"The film about a degree apprentice that works 4 days a week and studies one day, with the main character Jordan Prescott overcoming the challenges of his job and degree, is a heartfelt and action-packed movie. The audience is able to connect with Jordan and root for him throughout the film. The portrayal of his struggles in balancing work and study, as well as his determination to succeed, is inspiring and relatable. The movie offers an authentic look into the life of a degree apprentice, and is recommended for anyone who is pursuing a similar path. Overall, the film delivers an engaging and entertaining story with a positive message of perseverance and hard work.\",\n    \"genre\": \"Adventure\",\n    \"rating\": \"*****\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -556,7 +397,7 @@
 						"FilmsAPI"
 					]
 				},
-				"description": "This REST API endpoint updates an existing film in the database by including the ID of the film in the request body along with any parameters to update. The format of the request body must be specified with the Content-Type header, and it can be either JSON, XML, or TEXT. The request body must include the ID of the film to update and any parameters to modify, such as title, year, director, stars, review, genre, and rating."
+				"description": "This REST API endpoint updates an existing film in the database by including the ID of the film in the request body along with all fields must have a value or it will be removed. The format of the request body must be specified with the Content-Type header, and it can be either JSON, XML, or TEXT. The request body must include the ID of the film to update and any parameters to modify, such as title, year, director, stars, review, genre, and rating."
 			},
 			"response": [
 				{
@@ -584,7 +425,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 10001,\n    \"title\": \"Development Project\",\n    \"year\": 2023,\n    \"director\": \"Jordan Prescott\",\n    \"stars\": \"Jordan Prescott\",\n    \"review\": \"What a shocker.\",\n    \"genre\": \"Horror\",\n    \"rating\": \"*\"\n}",
+							"raw": "{\n    \"id\": 11313,\n    \"title\" : \"The Journey of Degree Apprentice\",\n    \"year\": 2023,\n    \"director\": \"Jordan Prescott\",\n    \"stars\": \"Jordan Prescott, dr Mohammed Kaleem, Fourteen IP Employees\",\n    \"review\": \"The film about a degree apprentice that works 4 days a week and studies one day, with the main character Jordan Prescott overcoming the challenges of his job and degree, is a heartfelt and action-packed movie. The audience is able to connect with Jordan and root for him throughout the film. The portrayal of his struggles in balancing work and study, as well as his determination to succeed, is inspiring and relatable. The movie offers an authentic look into the life of a degree apprentice, and is recommended for anyone who is pursuing a similar path. Overall, the film delivers an engaging and entertaining story with a positive message of perseverance and hard work.\",\n    \"genre\": \"Adventure\",\n    \"rating\": \"*****\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -655,7 +496,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": 10001\n}",
+					"raw": "{\n    \"id\": 11313\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -702,7 +543,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": 10001\n}",
+							"raw": "{\n    \"id\": 11313\n}",
 							"options": {
 								"raw": {
 									"language": "json"
