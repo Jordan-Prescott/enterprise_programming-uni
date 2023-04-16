@@ -23,12 +23,12 @@
 				<option>TEXT</option>
 			</select> <label for="searchBy" class="form-label me-sm-2">Search:</label>
 			<select class="form-select me-sm-2" id="searchBy">
-				<option>Title</option>
-				<option>Year</option>
-				<option>Director</option>
-				<option>Stars</option>
-				<option>Genre</option>
-				<option>Rating</option>
+				<option id="1">Title</option>
+				<option id="2">Year</option>
+				<option id="3">Director</option>
+				<option id="4">Stars</option>
+				<option id="5">Genre</option>
+				<option id="6">Rating</option>
 			</select> <input class="form-control me-sm-2" type="search"
 				placeholder="e.g. BATMAN" name="searchString" id="searchString">
 			<button class="btn btn-secondary">Search</button>
@@ -41,21 +41,17 @@
 <!-- BODY START -->
 <body>
 	<!-- FILMS TABLE -->
-		<table class="table table-hover" id="tableOutput">
-			<tr>
-				<th>Title</th>
-				<th>Year</th>
-				<th>Director</th>
-				<th>Stars</th>
-				<th>Genre</th>
-				<th>Rating</th>
-				<th>Review</th>
-		</table>
-
-	<script
+	<div id="filmTable"></div>
+	<script>
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-		crossorigin="anonymous"></script>
+		crossorigin="anonymous">
+	</script>
 </body>
+<script src="./js/jQuery.js"></script>
+<script src="./js/ajaxUtils.js"></script>
+<script>
+$(document).ready(loadPage);
+</script>
 <!-- BODY -->
 </html>
