@@ -13,7 +13,15 @@
 		<a class="navbar-brand" onclick='loadPage()'>Film DB</a>
 		<ul class="navbar-nav me-auto">
 			<li class="nav-item"><a class="btn btn-success"
-				href="./createFilm">Add Film</a></li>
+				href="./pages/addFilm.html">Add Film</a></li>
+				        <li class="nav-item">
+          <a class="nav-link" href="./pages/help.html">Help</a>
+          <li class="nav-item">
+          <img src="./images/notify.svg" alt="notifications icon.">
+        </li>
+         <li>
+          <div id="notifcation"></div>
+        </li>
 		</ul>
 		<form method="POST" action="./searchFilms" class="d-flex">
 			<label for="format" class="form-label me-sm-2">Format:</label> <select
@@ -41,7 +49,7 @@
 <!-- BODY START -->
 <body>
 	<!-- FILMS TABLE -->
-	<!-- <div id="filmTable"></div> -->
+	<div class="table-container">
 	<table id="filmTable" class="table table-hover">
 		<tr>
 			<th>Title</th>
@@ -53,16 +61,19 @@
 			<th>Review</th>
 		</tr>
 	</table>
+	</div>
 	<script>
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
 		crossorigin="anonymous">
 	</script>
+	
 </body>
+<!-- BODY -->
 <script src="./js/jQuery.js"></script>
 <script src="./js/ajaxUtils.js"></script>
+<script src="./js/webFeatures.js"></script>
 <script>
 $(document).ready(loadPage);
 </script>
-<!-- BODY -->
 </html>

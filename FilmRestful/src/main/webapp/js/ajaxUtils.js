@@ -2,9 +2,9 @@
  * 
  */
 
-$(function() {
-	$("#updateFilm").click(updateFilm);
-	$("#deleteFilm").click(deleteFilm);
+$(function() { // testing
+	$("#update").click(updateFilm);
+	$("#delete").click(deleteFilm);
 	$("#filmDB").click(loadPage);
 });
 
@@ -25,8 +25,8 @@ function loadPage() {
 				tableRow.append($('<td>').text(film.genre));
 				tableRow.append($('<td>').text(film.rating));
 				tableRow.append($('<td>').text(film.review));
-				tableRow.append($('<td type="button" class="btn btn-link" id="updateFilm">Update</td>'));
-				tableRow.append($('<td type="button" class="btn btn-link" id="deleteFilm">Delete</td>'));
+				tableRow.append($('<td><a href="./pages/updateFilm.html"><button type="button" class="btn btn-light">Update</button></a></td>'));
+				tableRow.append($('<td><button type="button" class="btn btn-danger" onclick="deleteFilm(' + film.id + ')">Delete</button></td>'));
 				table.append(tableRow);
 			})
 		},
@@ -41,6 +41,29 @@ function loadPage() {
 	});
 }
 
-function updateFilm() {
-	console.log("get the fuck out of here.")
+function deleteFilm(id){
+	$.ajax({
+		url: "FilmsAPI",
+		type: "GET",
+		dataType: "json",
+		data: {
+			searchString: id,
+			searchBy: "id"
+		},
+		success: notify("You deleted a film."),
+		error: function(jqXHR, textStatus, errorThrown) {
+			// Handle any errors that occur during the request
+			console.error("Error: " + textStatus, errorThrown);
+		},
+		complete: function() {
+			// Request complete
+			console.log("Load page complete");
+		}
+	});
+	
 }
+
+
+
+
+
