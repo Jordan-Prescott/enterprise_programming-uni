@@ -1,13 +1,13 @@
 /**
+ * ajaxUtils
+ * 
  * 
  */
 
-$(function() { // testing
-	$("#update").click(updateFilm);
-	$("#delete").click(deleteFilm);
-	$("#filmDB").click(loadPage);
-});
-
+/**
+ * loadPage
+ * 
+ */
 function loadPage() {
 	$.ajax({
 		url: "FilmsAPI",
@@ -41,28 +41,36 @@ function loadPage() {
 	});
 }
 
+
+/**
+ * deleteFilm
+ * 
+ */
 function deleteFilm(id){
-	$.ajax({
-		url: "FilmsAPI",
-		type: "DELETE",
-		dataType: "text",
-		data: JSON.stringify({id: id}),
-		contentType: "application/json",
-		success: function(result) {
-			console.log(result);
-			$('#' + id).remove();
-			},
-		error: function(jqXHR, textStatus, errorThrown) {
-			// Handle any errors that occur during the request
-			console.error("Error: " + textStatus, errorThrown);
-		},
-		complete: function(result) {
-			// Request complete
-			console.log("Delete film complete.");
-			notify(result.responseText);
-		}
-	});
 	
+	if (confirm("Are you sure you want to delete this item?")) { //ask for confirmation
+	
+		$.ajax({
+			url: "FilmsAPI",
+			type: "DELETE",
+			dataType: "text",
+			data: JSON.stringify({id: id}),
+			contentType: "application/json",
+			success: function(result) {
+				console.log(result);
+				$('#' + id).remove();
+				},
+			error: function(jqXHR, textStatus, errorThrown) {
+				// Handle any errors that occur during the request
+				console.error("Error: " + textStatus, errorThrown);
+			},
+			complete: function(result) {
+				// Request complete
+				console.log("Delete film complete.");
+				notify(result.responseText);
+			}
+		});
+	} 
 }
 
 
