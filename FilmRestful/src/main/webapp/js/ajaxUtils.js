@@ -17,7 +17,7 @@ function loadPage() {
 			var table = $('#filmTable');
 
 			$.each(data, function(i, film) {
-				var tableRow = $('<tr>');
+				var tableRow = $('<tr id="'+ film.id +'">');
 				tableRow.append($('<td>').text(film.title));
 				tableRow.append($('<td>').text(film.year));
 				tableRow.append($('<td>').text(film.director));
@@ -44,20 +44,22 @@ function loadPage() {
 function deleteFilm(id){
 	$.ajax({
 		url: "FilmsAPI",
-		type: "GET",
-		dataType: "json",
-		data: {
-			searchString: id,
-			searchBy: "id"
-		},
-		success: notify("You deleted a film."),
+		type: "DELETE",
+		dataType: "text",
+		data: JSON.stringify({id: id}),
+		contentType: "application/json",
+		success: function(result) {
+			console.log(result);
+			$('#' + id).remove();
+			},
 		error: function(jqXHR, textStatus, errorThrown) {
 			// Handle any errors that occur during the request
 			console.error("Error: " + textStatus, errorThrown);
 		},
-		complete: function() {
+		complete: function(result) {
 			// Request complete
-			console.log("Load page complete");
+			console.log("Delete film complete.");
+			notify(result.responseText);
 		}
 	});
 	

@@ -351,7 +351,7 @@ public class FilmsAPI extends HttpServlet {
 
 		try { // delete film
 			dao.deleteFilm(id);
-			out.write("contact deleted.");
+			out.write("film deleted.");
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
