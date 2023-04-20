@@ -14,64 +14,133 @@
 		<ul class="navbar-nav me-auto">
 			<li class="nav-item"><a class="btn btn-success"
 				href="../pages/addFilm.html">Add Film</a></li>
-				        <li class="nav-item">
-          <a class="nav-link" href="../pages/help.html">Help</a>
-        </li>
+			<li class="nav-item"><a class="nav-link"
+				href="#">Help</a></li>
+			<li class="nav-item"><a class="nav-link" href="./API.html">API</a></li>
 		</ul>
 
 	</div>
 </nav>
 
 <body>
+	<div class="table-container">
+		<h1>Help Page</h1>
+		<p>This page provides detailed information about this web
+			application. Details on all features and step by step instructions on
+			how to achieve a task can all be found in here. The structure of this
+			help page is page first and then each feature beneath for example if
+			you wanted to look for details on the search function you would first
+			locate Main Page as this is the page its located on and then look for
+			search.</p>
+		<p>There is a table of content you can use to click to the
+			relevant page you are looking for.</p>
 
-	<h1>Help Page</h1>
-	<p>This page provides detailed information about this web application. Details on all features and step by step instructions on how to achieve a task 
-	can all be found in here. The structure of this help page is page first and then each feature beneath for example if you wanted to look for details on
-	the search function you would first locate Main Page as this is the page its located on and then look for search.</p>
-	<p>There is a table of content you can use to click to the relevant page you are looking for.</p>
-	
-	<!-- Table of contents -->
-	<h2>Table of Contents</h2>
-	<ul>
-		<li><a href="MainPage">Main Page</a></li>
-		<li><a href="#AddPage">Add Film Page</a></li>
-		<li><a href="#UpdatePage">Update Film Page</a></li>
-		<!-- Add more sections here -->
-	</ul>
-	
-	<!-- Section 1 -->
-	<h2 id="MainPage">Main Page</h2>
-	<p>The main page is where all films in the database are presented in a table and where you access all features of this application. This is a simple
-	page with a navigation bar across the top and the films table in the body.</p>
-	
-	<h3>Navigation Bar</h3>
-	<p>The navigation is to help you navigate around the application as well as hosting a couple other features such as notifications and search. This 
-	bar contains a home button of 'Film DB' a link to this help page, notifications section and the search function on the right-hand side.</p>
-	
-	<h4>Add Film</h4>
-	<h4>Help</h4>
-	<h4>Notifications</h4>
-	<h4>Search</h4>
-	<h3>Body</h3>
-	<h4>Table</h4>
-	<h4>Update</h4>
-	<h4>Delete</h4>
-	
-	
-	<!-- Add more content here -->
-	
-	<!-- Section 2 -->
-	<h2 id="AddPage">Add Film Page</h2>
-	<p>This section provides information about the second feature of the web app.</p>
-	<!-- Add more content here -->
-	
-	<!-- Section 3 -->
-	<h2 id="UpdatePage">Update Film Page</h2>
-	<p>This section provides information about the third feature of the web app.</p>
-	<!-- Add more content here -->
-	
-	<!-- Add more sections as needed -->
-<script src="./js/jQuery.js"></script>
-<script src="./js/ajaxUtils.js"></script>
+		<!-- Table of contents -->
+		<h2>Table of Contents</h2>
+		<ul>
+			<li><a href="#MainPage">Main Page</a></li>
+			<li><a href="#AddPage">Add Film Page</a></li>
+			<li><a href="#UpdatePage">Update Film Page</a></li>
+			<li><a href="#API">API Page</a></li>
+		</ul>
+
+		<!-- Main Page -->
+		<h2 id="MainPage">Main Page</h2>
+		<p>The main page is where all films in the database are presented
+			in a table and where you access all features of this application.
+			This is a simple page with a navigation bar across the top and the
+			films table in the body.</p>
+
+		<h3>Navigation Bar</h3>
+		<p>The navigation is to help you navigate around the application
+			as well as hosting a couple other features such as notifications and
+			search. This bar contains a home button of 'Film DB' a link to this
+			help page, notifications section and the search function on the
+			right-hand side.</p>
+
+		<h4>Add Film</h4>
+		<p>The Add Film button will take you to a new page to add a new
+			film to the database. This page consists of a form with fields for
+			the film details.</p>
+
+		<h4>Help</h4>
+		<p>You have already found your way here! This button will bring
+			you to this page which as you can see details this web application.</p>
+
+		<h4>Notifications</h4>
+		<p>The notification bell is where all actions and notifications
+			are shown. For example when you delete a film the message back from
+			the API will be displayed here indicating if this was a success or if
+			there was an error.</p>
+
+		<h4>Search</h4>
+		<p>The search function has two fields, the first being the format
+			field where the user can specify the data format they prefer to
+			receive the search results in. The available options are JSON, XML,
+			or TEXT. The second field is the search field, where the user can
+			enter the type of value they are searching for. The available options
+			in this field are Title, Year, Director, Stars, Genre, and Rating.
+			The search function uses these two fields to retrieve search results
+			that match the user's query criteria in the specified format.</p>
+
+		<h3>Body</h3>
+		<p>The body is where the details of the films are shown in a table
+			with features for the user to interact with the table.</p>
+
+		<h4>Table</h4>
+		<p>The table displays a list of film entries, each row
+			representing a separate film, with columns for title, director,
+			genre, year of release, and rating. In addition, each row contains
+			two buttons: an "Update" button and a "Delete" button. The "Update"
+			button allows the user to modify the details of a particular film,
+			while the "Delete" button allows them to remove the film from the
+			list entirely.</p>
+
+		<h4>Update</h4>
+		<p>The update button will take the user to another page where they
+			are will be able to modify the details of a particular film</p>
+
+		<h4>Delete</h4>
+		<p>The delete button allows a user to remove the film from the
+			list entirely. The user will be prompted to confirm they want to
+			remove the film.</p>
+
+		<!-- Add Page -->
+		<h2 id="AddPage">Add Film Page</h2>
+		<p>The page allows users to fill out a form to add a new film to the database. 
+		The form may contain fields such as title, director, genre, year of release, rating, and review,
+		with each field requiring input from the user. Once the user has 
+		entered all the required information, they can submit the form to add the film 
+		to the database. The page may include features such as error checking to ensure 
+		that the user has entered all necessary information, as well as options to 
+		cancel or reset the form. The page requires all fields are filled in before
+		 the form is submitted.</p>
+
+		<!-- Update Page 3 -->
+		<h2 id="UpdatePage">Update Film Page</h2>
+		<p>The page allows the user to update a film by filling out a form with the film's 
+		current details pre-filled. The form will have fields for the film's 
+		title, director, genre, year of release, rating, and review, which the user can 
+		update as desired. Before the form can be processed, the user must fill 
+		in each field with new information or the current information if no update 
+		is required. The page requires all fields are filled in before the form is submitted.</p>
+
+
+		<h2 id="API">API Page</h2>
+		<p>The page provides a comprehensive overview of the API for a film database. 
+		It includes information on all the available API requests, along with their 
+		associated parameters and expected responses. Additionally, the page may 
+		provide links to relevant documentation, such as data schemas or code examples.</p>
+		
+		<p>To help developers test and experiment with the API, the page includes a 
+		link to Postman, a popular development environment for making API calls. 
+		Users can simply click the link to open the relevant collection or workspace 
+		in Postman, pre-populated with the necessary API requests and parameters. This makes 
+		it easy for developers to quickly get up and running with the API and start building 
+		their applications. The page may be styled with CSS to make it visually appealing 
+		and user-friendly.</p>
+	</div>
+	<script src="./js/jQuery.js"></script>
+	<script src="./js/ajaxUtils.js"></script>
 </body>
 </html>

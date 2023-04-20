@@ -17,6 +17,7 @@ function notify(message) {
 		'<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="clearNotification()"></button>' + 
 		message + '</div>');
 
+	return notify
 }
 
 
@@ -30,3 +31,8 @@ function clearNotification() {
 
 	notify.replaceWith('<li id="inbox"></li>');
 }
+
+function storeItem(key, value) {
+	localStorage.setItem(key, value);
+}
+
