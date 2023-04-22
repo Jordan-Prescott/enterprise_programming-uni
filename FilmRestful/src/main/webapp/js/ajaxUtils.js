@@ -14,7 +14,7 @@ function loadPage() {
 		type: "GET",
 		dataType: "json",
 		success: function(data) {
-			var table = $('#filmTable');
+			var table = $('#filmTableBody');
 
 			$.each(data, function(i, film) {
 				var tableRow = $('<tr id="' + film.id + '">');
@@ -106,12 +106,12 @@ function addFilm() {
 			contentType: "application/json",
 			success: function(result) {
 				console.log(result);
-				
+
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				// Handle any errors that occur during the request
 				console.error("Error: " + textStatus, errorThrown);
-				
+
 			},
 			complete: function(result) {
 				// Request complete
@@ -119,8 +119,8 @@ function addFilm() {
 			}
 		});
 
-	} 
-	
+	}
+
 }
 
 /**
@@ -128,9 +128,7 @@ function addFilm() {
  * 
  */
 function updateFilm() {
-	
-	
-	
+
 	var id = localStorage.getItem("filmID");
 	var title = $('#title').val();
 	var year = $('#year').val();
@@ -162,22 +160,22 @@ function updateFilm() {
 			success: function(result) {
 				console.log(result.responseText);
 				window.location.href = '../index.html';
-				
+
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				// Handle any errors that occur during the request
 				console.error("Error: " + textStatus, errorThrown);
-				
+
 			},
 			complete: function(result) {
 				// Request complete
 				console.log("Update film complete.");
-				
+
 			}
 		});
 
-	} 
-	
+	}
+
 }
 
 /**
@@ -185,42 +183,82 @@ function updateFilm() {
  * 
  */
 function populateUpdateForm() {
-	
+
 	id = localStorage.getItem("filmID");
-	
+
 	$.ajax({
-			url: "../FilmsAPI",
-			type: "GET",
-			dataType: "json",
-			data: { 
-				searchBy: "id",
-				searchString: id
-				},
-			success: function(result) {
-				
-				var film = result[0];
-				console.log(film);
-				 $("#title").val(film.title);
-				 $("#director").val(film.director);
-				 $("#year").val(film.year);
-				 $("#stars").val(film.stars);
-				 $("#genre").val(film.genre);
-				 $("#rating").val(film.rating);
-				 $("#review").val(film.review);
-				
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-				// Handle any errors that occur during the request
-				console.error("Error: " + textStatus, errorThrown);
-			},
-			complete: function(result) {
-				// Request complete
-				console.log("Get Film for update complete.");
-				notify(result.responseText);
-			}
-		});
+		url: "../FilmsAPI",
+		type: "GET",
+		dataType: "json",
+		data: {
+			searchBy: "id",
+			searchString: id
+		},
+		success: function(result) {
+
+			var film = result[0];
+			console.log(film);
+			$("#title").val(film.title);
+			$("#director").val(film.director);
+			$("#year").val(film.year);
+			$("#stars").val(film.stars);
+			$("#genre").val(film.genre);
+			$("#rating").val(film.rating);
+			$("#review").val(film.review);
+
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			// Handle any errors that occur during the request
+			console.error("Error: " + textStatus, errorThrown);
+		},
+		complete: function(result) {
+			// Request complete
+			console.log("Get Film for update complete.");
+			notify(result.responseText);
+		}
+	});
 }
 
-function searchFilms() {
+
+function searchFilm() {
+
+	$("#filmTableBody").empty();
+
+	var format = $("#format").val();
+	var searchBy = $("#searchBy").val();
+	var searchString = $("#searchString").val();
 	
+	// 
+	if(format == "xml") {
+		accept = "application/xml"
+	} else if(format == "text") {
+		accept = "text/plain"
+	} else {
+		accept = "application/json"
+	}
+
+	$.ajax({
+		url: "FilmsAPI",
+		type: "GET",
+		dataType: format,
+		data: {
+			searchBy: searchBy,
+			searchString: searchString
+		},
+		headers: {
+			"Accept": accept
+		},
+		success: function(data) {
+			getBody(format, data);			
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			// Handle any errors that occur during the request
+			console.error("Error: " + textStatus, errorThrown);
+		},
+		complete: function() {
+			// Request complete
+			console.log("Load page complete");
+		}
+	});
+
 }

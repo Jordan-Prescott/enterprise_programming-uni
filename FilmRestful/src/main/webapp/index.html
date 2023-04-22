@@ -22,24 +22,25 @@
 				alt="notifications icon."></li>
 			<li id="inbox"></li>
 		</ul>
-		<form method="POST" action="./searchFilms" class="d-flex">
-			<label for="format" class="form-label me-sm-2">Format:</label> <select
-				class="form-select me-sm-2" id="format">
-				<option>JSON</option>
-				<option>XML</option>
-				<option>TEXT</option>
-			</select> <label for="searchBy" class="form-label me-sm-2">Search:</label> <select
-				class="form-select me-sm-2" id="searchBy">
-				<option id="title">Title</option>
-				<option id="year">Year</option>
-				<option id="director">Director</option>
-				<option id="stars">Stars</option>
-				<option id="genre">Genre</option>
-				<option id="rating">Rating</option>
+		<div id="searchForm" class="d-flex">
+			<label class="form-label me-sm-2">Format:</label> 
+			<select class="form-select me-sm-2" id="format">
+				<option value="json">JSON</option>
+				<option value="xml" >XML</option>
+				<option value="text">TEXT</option>
+			</select> 
+			<label for="searchBy" class="form-label me-sm-2">Search:</label> 
+			<select class="form-select me-sm-2" id="searchBy">
+				<option value="title">Title</option>
+				<option value="year">Year</option>
+				<option value="director">Director</option>
+				<option value="stars">Stars</option>
+				<option value="genre">Genre</option>
+				<option value="rating">Rating</option>
 			</select> <input class="form-control me-sm-2" type="search"
 				placeholder="e.g. BATMAN" name="searchString" id="searchString">
-			<button class="btn btn-secondary">Search</button>
-		</form>
+			<button id="searchButton" onclick="searchFilm()" class="btn btn-secondary">Search</button>
+		</div>
 
 	</div>
 </nav>
@@ -50,6 +51,7 @@
 	<!-- FILMS TABLE -->
 	<div class="table-container">
 		<table id="filmTable" class="table table-hover">
+		<thead>
 			<tr>
 				<th>Title</th>
 				<th>Year</th>
@@ -59,6 +61,9 @@
 				<th>Rating</th>
 				<th>Review</th>
 			</tr>
+		</thead>
+		<tbody id="filmTableBody">
+		</tbody>
 		</table>
 	</div>
 
