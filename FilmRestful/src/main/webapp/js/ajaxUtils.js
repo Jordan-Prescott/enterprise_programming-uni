@@ -49,6 +49,9 @@ function loadPage() {
 			console.log("Load page complete");
 		}
 	});
+	
+	// get notification
+	notify();
 }
 
 /**
@@ -80,17 +83,18 @@ function deleteFilm(id) {
 				
 				// remove entry in table
 				$('#' + id).remove();
-				notify(result);
+				
+				// notify user film was deleted
+				setNotification(result);
+				notify(); // page doesnt reload so notify is called
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				// Handle any errors that occur during the request
 				console.error("Error: " + textStatus, errorThrown);
-				
-				// notify the film was deleted.
-				// TODO: refactor 
-				notify(result);
+				setNotification(result);
+				notify();
 			},
-			complete: function(result) {
+			complete: function() {
 				// Request complete
 				console.log("Delete film complete.");
 			}
@@ -110,7 +114,6 @@ function deleteFilm(id) {
  * the database. If the request is successful, the function notifies the user 
  * that the film has been added and redirects them to the index page. 
  * 
- * TODO: Notify and redirtect the user to index
  */
 function addFilm() {
 	
@@ -145,16 +148,25 @@ function addFilm() {
 			contentType: "application/json",
 			success: function(result) {
 				console.log(result);
-
+				
+				// set notifcation to alert the user
+				setNotification(result);
+				
+				//redirect to index
+				window.location.href="../index.html";
+				
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				// Handle any errors that occur during the request
 				console.error("Error: " + textStatus, errorThrown);
+				setNotification(result);
+				notify();
 
 			},
-			complete: function(result) {
+			complete: function() {
 				// Request complete
 				console.log("Added film complete.");
+				
 			}
 		});
 
@@ -175,7 +187,6 @@ function addFilm() {
  * is successful, the function notifies the user that the film has been updated 
  * and redirects them to the index page. 
  * 
- * TODO: notify and redirect user 
  */
 function updateFilm() {
 	
@@ -211,16 +222,23 @@ function updateFilm() {
 			),
 			contentType: "application/json",
 			success: function(result) {
-				console.log(result.responseText);
-				window.location.href = 'index.html';
+				console.log(result);
+				
+				// set notification to alert user
+				setNotification(result);
+				
+				// redirect to index.html
+				window.location.href="../index.html";
 
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				// Handle any errors that occur during the request
 				console.error("Error: " + textStatus, errorThrown);
+				setNotification(result);
+				notify();
 
 			},
-			complete: function(result) {
+			complete: function() {
 				// Request complete
 				console.log("Update film complete.");
 
@@ -234,7 +252,11 @@ function updateFilm() {
 /**
  * populateUpdateForm
  * 
- * 
+ * populateUpdateTable() function retrieves a film's ID from localStorage, 
+ * makes an API call to get the film's details matching the ID, and then 
+ * populates an update form with the retrieved information. It simplifies 
+ * the process of updating a film's details by automating the information 
+ * retrieval and population.
  * 
  */
 function populateUpdateForm() {
@@ -284,7 +306,12 @@ function populateUpdateForm() {
 /**
  * searchFilm
  * 
- * 
+ * searchFilm() function sends an API request to search for films, 
+ * empties the current table, parses the API response based on the 
+ * user's preferred format, and then displays the parsed data in 
+ * the table. The function pulls the search criteria set by the user
+ * stored in the search bar for format, search, and the string they 
+ * entered into the input field.
  * 
  */
 function searchFilm() {

@@ -138,3 +138,11 @@ function formatRow(film) {
 
 	return tableRow
 }
+
+function setNotification(message) {
+	localStorage.setItem("notification", message);
+}
+
+function getNotification() {
+	return localStorage.getItem("notification");
+}
