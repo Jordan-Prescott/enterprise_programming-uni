@@ -139,10 +139,20 @@ function formatRow(film) {
 	return tableRow
 }
 
+
+/**
+ * setNotification
+ * 
+ */
 function setNotification(message) {
 	localStorage.setItem("notification", message);
 }
 
+/**
+ * getNotification
+ * 
+ */
 function getNotification() {
 	return localStorage.getItem("notification");
 }
+

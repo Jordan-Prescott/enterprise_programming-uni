@@ -24,34 +24,29 @@
  * in the database. The function then processes the response and apps the 
  * elements to the HTML elements to display the films on the index page.
  * 
+ * 
+ * TODO: ammend the above
  */
-function loadPage() {
-	
+function getAllFilms() {
+
 	// get all films
-	$.ajax({
+	 return $.ajax({
 		url: "FilmsAPI",
 		type: "GET",
 		dataType: "json",
-		success: function(result) {
-			var table = $('#filmTableBody');
-			
-			//loop over results and format each film for a row in table
-			$.each(result, function(i, film) {
-				table.append(formatRow(film));
-			})
+		success: function() {
+			console.log("Get all films success");
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
-			// Handle any errors that occur during the request
-			console.error("Error: " + textStatus, errorThrown);
-		},
-		complete: function() {
-			// Request complete
-			console.log("Load page complete");
-		}
+				// Handle any errors that occur during the request
+				console.error("Error: " + textStatus, errorThrown);
+			},
+			complete: function() {
+				// Request complete
+				console.log("Get all films complete.");
+			}
 	});
-	
-	// get notification
-	notify();
+
 }
 
 /**
@@ -72,7 +67,7 @@ function deleteFilm(id) {
 	if (confirm("Are you sure you want to delete this item?")) { //ask for confirmation
 
 		// delete film
-		$.ajax({ 
+		$.ajax({
 			url: "FilmsAPI",
 			type: "DELETE",
 			dataType: "text",
@@ -80,10 +75,10 @@ function deleteFilm(id) {
 			contentType: "application/json",
 			success: function(result) {
 				console.log(result);
-				
+
 				// remove entry in table
 				$('#' + id).remove();
-				
+
 				// notify user film was deleted
 				setNotification(result);
 				notify(); // page doesnt reload so notify is called
@@ -116,7 +111,7 @@ function deleteFilm(id) {
  * 
  */
 function addFilm() {
-	
+
 	// get values in form entered by user
 	var title = $('#title').val();
 	var year = $('#year').val();
@@ -148,13 +143,13 @@ function addFilm() {
 			contentType: "application/json",
 			success: function(result) {
 				console.log(result);
-				
+
 				// set notifcation to alert the user
 				setNotification(result);
-				
+
 				//redirect to index
-				window.location.href="../index.html";
-				
+				window.location.href = "../index.html";
+
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
 				// Handle any errors that occur during the request
@@ -166,7 +161,7 @@ function addFilm() {
 			complete: function() {
 				// Request complete
 				console.log("Added film complete.");
-				
+
 			}
 		});
 
@@ -189,7 +184,7 @@ function addFilm() {
  * 
  */
 function updateFilm() {
-	
+
 	// get details of film from form
 	var id = localStorage.getItem("filmID");
 	var title = $('#title').val();
@@ -223,12 +218,12 @@ function updateFilm() {
 			contentType: "application/json",
 			success: function(result) {
 				console.log(result);
-				
+
 				// set notification to alert user
 				setNotification(result);
-				
+
 				// redirect to index.html
-				window.location.href="../index.html";
+				window.location.href = "../index.html";
 
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
@@ -250,60 +245,6 @@ function updateFilm() {
 }
 
 /**
- * populateUpdateForm
- * 
- * populateUpdateTable() function retrieves a film's ID from localStorage, 
- * makes an API call to get the film's details matching the ID, and then 
- * populates an update form with the retrieved information. It simplifies 
- * the process of updating a film's details by automating the information 
- * retrieval and population.
- * 
- */
-function populateUpdateForm() {
-
-	// get id stored in local storage
-	id = localStorage.getItem("filmID");
-
-	// get film
-	$.ajax({
-		url: "../FilmsAPI",
-		type: "GET",
-		dataType: "json",
-		data: {
-			searchBy: "id",
-			searchString: id
-		},
-		success: function(result) {
-
-			// list returned so get the only entry
-			var film = result[0];
-			
-			// fill in the form with current film details			
-			$("#title").val(film.title);
-			$("#director").val(film.director);
-			$("#year").val(film.year);
-			$("#stars").val(film.stars);
-			$("#genre").val(film.genre);
-			$("#rating").val(film.rating);
-			$("#review").val(film.review);
-			
-			console.log(film);
-
-		},
-		error: function(jqXHR, textStatus, errorThrown) {
-			// Handle any errors that occur during the request
-			console.error("Error: " + textStatus, errorThrown);
-		},
-		complete: function(result) {
-			// Request complete
-			console.log("Get Film for update complete.");
-			notify(result.responseText);
-		}
-	});
-}
-
-
-/**
  * searchFilm
  * 
  * searchFilm() function sends an API request to search for films, 
@@ -323,11 +264,11 @@ function searchFilm() {
 	var format = $("#format").val();
 	var searchBy = $("#searchBy").val();
 	var searchString = $("#searchString").val();
-	
+
 	// format accept header on whats requested by user
-	if(format == "xml") {
+	if (format == "xml") {
 		accept = "application/xml"
-	} else if(format == "text") {
+	} else if (format == "text") {
 		accept = "text/plain"
 	} else {
 		accept = "application/json"
@@ -346,7 +287,7 @@ function searchFilm() {
 			"Accept": accept
 		},
 		success: function(data) {
-			getBody(format, data);			
+			getBody(format, data);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			// Handle any errors that occur during the request

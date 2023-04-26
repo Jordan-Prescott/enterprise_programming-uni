@@ -58,25 +58,8 @@ function clearNotification() {
 }
 
 
-/**
- * liveSearch
- * 
- * The code that enables live searching in a web application allows users 
- * to search for specific data within a table and see the results update 
- * live as they type their search query. 
- *
- */
-$(document).ready(function() {
-    $('#searchString').on('keyup', function() {
-        var query = $(this).val().toLowerCase();
-        $('#filmTable tbody tr').each(function() {
-            var text = $(this).text().toLowerCase();
-            if(text.indexOf(query) !== -1) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
-    });
-});
+
+
+
+
 
