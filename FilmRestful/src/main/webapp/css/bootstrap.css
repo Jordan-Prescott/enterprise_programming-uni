@@ -353,6 +353,10 @@ button:focus:not(:focus-visible) {
   outline: 0;
 }
 
+.cdButton {
+	margin-left: 10px;
+}
+
 input,
 button,
 select,

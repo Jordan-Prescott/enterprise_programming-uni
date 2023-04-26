@@ -36,26 +36,27 @@ function notify() {
 
 }
 
-
 /**
- * clearNotification
+ * liveSearch
  * 
- * clearNotification is a function that clears the message stored in localStorage 
- * and replaces the notification div with an empty li element. This resets the 
- * notification display, ready for a new notification. It's a useful function to 
- * provide a clean interface for the user.
- * 
+ * The code that enables live searching in a web application allows users 
+ * to search for specific data within a table and see the results update 
+ * live as they type their search query. 
+ *
  */
-function clearNotification() {
-	
-	var notify = $('#inbox')
-	
-	// replaces current notfication with nothing 
-	notify.replaceWith('<li id="inbox"></li>');
-	
-	// clear notification stored in local storage
-	setNotification("");
-}
+$(document).ready(function() {
+    $('#searchString').on('keyup', function() {
+        var query = $(this).val().toLowerCase();
+        $('#filmTable tbody tr').each(function() {
+            var text = $(this).text().toLowerCase();
+            if(text.indexOf(query) !== -1) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+});
 
 
 

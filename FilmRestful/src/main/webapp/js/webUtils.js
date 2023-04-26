@@ -16,16 +16,6 @@
 /**
  * storeID
  * 
- * The storeID function takes in an id parameter and stores this value to localStorage 
- * with the key of filmID. The purpose of this function is to allow the application to 
- * remember the id of the film that the user wants to update, so that it can be retrieved 
- * later on the updateFilm.html page. By storing this value in localStorage, the 
- * application can ensure that it persists across different browser sessions and page 
- * reloads. This function is called when the user clicks on a "Update" button or link on 
- * the index page, and it stores the id of the corresponding film in localStorage using 
- * the key of filmID. Later, when the user navigates to the updateFilm.html page, the 
- * application can retrieve the id from localStorage and use it to pre-populate the 
- * update form with the details of the selected film.
  * 
  * @param {string} id - Unique identifier of a film.
  */
@@ -36,17 +26,6 @@ function storeID(id) {
 /**
  * getBody
  * 
- * The getBody function takes in two parameters - format and data. The format parameter 
- * specifies the format of the data that is being passed in, which can be one of 
- * JSON, XML, or TEXT. This indicates to the function how it should parse the data 
- * parameter that is being passed in. The purpose of this function is to format the 
- * data which is results from an API call, in order to make it suitable for display 
- * in a table. The formatted data is then added to the filmTableBody element in the 
- * HTML, which is used to populate the table body with the results. The getBody function 
- * typically forms part of a larger AJAX request function, which retrieves data from an 
- * API and then passes it to the getBody function for formatting and display. By formatting 
- * the data in a standardized way, the function ensures that it is displayed correctly and 
- * consistently in the table, regardless of the specific format of the API response.
  * 
  * @param {string} format - Format of the data passed in either json, xml, or text.
  * @param {Array} data - Results returned from api request.
@@ -156,3 +135,22 @@ function getNotification() {
 	return localStorage.getItem("notification");
 }
 
+/**
+ * clearNotification
+ * 
+ * clearNotification is a function that clears the message stored in localStorage 
+ * and replaces the notification div with an empty li element. This resets the 
+ * notification display, ready for a new notification. It's a useful function to 
+ * provide a clean interface for the user.
+ * 
+ */
+function clearNotification() {
+	
+	var notify = $('#inbox')
+	
+	// replaces current notfication with nothing 
+	notify.replaceWith('<li id="inbox"></li>');
+	
+	// clear notification stored in local storage
+	setNotification("");
+}
