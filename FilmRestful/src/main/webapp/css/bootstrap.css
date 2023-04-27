@@ -353,8 +353,12 @@ button:focus:not(:focus-visible) {
   outline: 0;
 }
 
-.cdButton {
+.cdButton { /* HERE */
 	margin-left: 10px;
+}
+
+.format-select { /* HERE */
+	width: 100%;
 }
 
 input,

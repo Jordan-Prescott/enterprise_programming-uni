@@ -9,7 +9,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 	<div class="container-fluid">
 
-		<a class="navbar-brand" href="../index.html">Film DB</a>
+		<a href="../index.html"><img src="../images/logo.svg"
+			alt="Film DB Logo."></a>
 		<ul class="navbar-nav me-auto">
 			<li class="nav-item"><a class="btn btn-success" href="#">Add
 					Film</a></li>
@@ -20,6 +21,14 @@
 				alt="notifications icon."></li>
 			<li id="inbox"></li>
 		</ul>
+		<div id="formatForm" class="d-flex">
+			<label class="form-label me-sm-2">Format:</label> <select
+				class="form-select me-sm-2" id="format" style="width: 98px;">
+				<option value="json">JSON</option>
+				<option value="xml">XML</option>
+				<option value="text">TEXT</option>
+			</select>
+		</div>
 
 	</div>
 </nav>
