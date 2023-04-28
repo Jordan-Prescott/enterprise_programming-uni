@@ -165,7 +165,7 @@ function searchFilms() {
 			getBody(format, data);
 		})
 	} else {
-		setNotification("Not sure what you want? I'll just give you them all.");
+		setNotification("Not sure what you want? I'll give you them all.");
 		notify();
 		apiSearchFilm(accept, format, searchBy, searchString).done(function(data) {
 			getBody(format, data);

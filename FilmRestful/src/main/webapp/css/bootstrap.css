@@ -361,6 +361,14 @@ button:focus:not(:focus-visible) {
 	width: 100%;
 }
 
+.logo { /* HERE */
+	padding-right: 10px;
+}
+
+.search-btn { /* HERE */
+ 	padding: 6px
+}
+
 input,
 button,
 select,
