@@ -26,6 +26,7 @@ function notify() {
 	
 	if (message) { // if not null - used when page is first loaded
 		
+		// nav bar where notifcation is inserted
 		var notify = $('#inbox')
 	
 		// replace inbox with current notification
@@ -39,6 +40,11 @@ function notify() {
 /**
  * setNotification
  * 
+ * This function is used to store a notifcation message in the localStorage.
+ * The reason is on moving to other pages the messages would be lost otherwise
+ * this way when a page loads it can look if there any notifications and store
+ * in inbox for user.
+ * 
  */
 function setNotification(message) {
 	localStorage.setItem("notification", message);
@@ -46,6 +52,9 @@ function setNotification(message) {
 
 /**
  * getNotification
+ * 
+ * This is used to retrieve the notification stored in localStorange to be 
+ * displayed to the user.
  * 
  */
 function getNotification() {
@@ -94,7 +103,27 @@ $(document).ready(function() {
     });
 });
 
+/**
+ * randomFilm
+ * 
+ * This function clears the table and randomly generates a film for the user.
+ * This is if the user is looking for a film to watch and cant decide this 
+ * fucntion will give a random film.
+ * 
+ */
+function randomFilm() {
 
+	// empty table ready for new entries
+	body.empty();
+	
+	// get random film
+	const randomNumber = Math.floor(Math.random() * allFilms.length);
+	const film = allFilms[randomNumber];
+	
+	// display random film
+	body.append(getRow(film));
+	
+}
 
 
 

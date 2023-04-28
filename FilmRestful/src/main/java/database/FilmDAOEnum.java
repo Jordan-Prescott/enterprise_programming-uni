@@ -111,6 +111,7 @@ public enum FilmDAOEnum {
 		try {
 			openConnection(insertSQL);
 
+			// format query 
 			prepStmt.setString(1, f.getTitle());
 			prepStmt.setInt(2, f.getYear());
 			prepStmt.setString(3, f.getDirector());
@@ -174,46 +175,7 @@ public enum FilmDAOEnum {
 			System.out.println(selectSQL);
 			ResultSet rs = prepStmt.executeQuery();
 
-			while (rs.next()) {
-				oneFilm = getNextFilm(rs);
-				filmsArray.add(oneFilm);
-			}
-
-		} catch (SQLException se) {
-			se.printStackTrace();
-		} finally {
-			//regardless of error close conn
-			closeConnection();			
-		}
-
-		return filmsArray;
-	}
-
-	/**
-	 * getFilm
-	 * 
-	 * This method gets a single film from the DB by querying the DB by ID. Each ID is 
-	 * unique and the database if it finds a result will only return one value. Array is
-	 * returned for efficiency in FilmAPI.
-	 * 
-	 * @param f Film object
-	 * @return filmsArray Array of films but as the query is by id only one value returned
-	 */
-	public ArrayList<Film> getFilm(Film f) { // READ TODO: NO LONGER NEEDED KEEPING JUST IN CASE FOR NOW BUT REMOVE AT END OF PROJECT
-
-		ArrayList<Film> filmsArray = new ArrayList<Film>();
-		String selectSQL = "SELECT * FROM films WHERE id = ?;";
-
-		try { // get film from DB
-			openConnection(selectSQL);
-
-			// format query 
-			prepStmt.setInt(1, f.getId());
-			System.out.println(prepStmt.toString());
-
-			ResultSet rs = prepStmt.executeQuery();
-
-			while (rs.next()) {
+			while (rs.next()) { // loop through request results
 				oneFilm = getNextFilm(rs);
 				filmsArray.add(oneFilm);
 			}
@@ -230,13 +192,11 @@ public enum FilmDAOEnum {
 
 	/**
 	 * searchFilmsBy 
-	 * 
-	 * 
-	 * COMMENT HERE
-	 * 
-	 * Takes parameter of String s a SQL query and String column and queries the 
-	 * database on the criteria (c) in the column of (column). This then returns 
-	 * all values as a list
+	 *
+	 * Takes in two parameters the first is String s this is the search string the 
+	 * user is looking for e.g. 'Batman'. The second parameter is String column this
+	 * is the column the user is searching against e.g. 'Title'. This request would
+	 * look for films with the title of battman.
 	 * 
 	 * @param s Value use is looking for such as 'Batman'
 	 * @param column The column which the user wants to search such as title
@@ -252,14 +212,14 @@ public enum FilmDAOEnum {
 		try {
 			openConnection(selectSQL);
 			
-			// passes in string in all places and wildcards some for better results
+			// format query
 			prepStmt.setString(1, s);
 		
 			System.out.println(prepStmt);
 			
 			ResultSet rs = prepStmt.executeQuery();
 			
-			while (rs.next()) {
+			while (rs.next()) { // loop through films returned in request
 				oneFilm = getNextFilm(rs);
 				filmsArray.add(oneFilm);
 			}
@@ -277,9 +237,10 @@ public enum FilmDAOEnum {
 	/**
 	 * updateFilm
 	 * 
-	 * Takes parameter of Film object and uses details of Film to format an SQL
+	 * Takes parameter of Film f object and uses details of Film to format an SQL
 	 * query and then execute the query against the DB. This updates a film entry in
-	 * DB.
+	 * DB. It first creates a string of the query and then uses prepared statements 
+	 * to format the query securely before executing it.
 	 * 
 	 * @param f Film object that will be updated in DB.
 	 * @return b Boolean of true to indicate completion.
@@ -292,7 +253,7 @@ public enum FilmDAOEnum {
 		try {
 			openConnection(insertSQL);
 
-			// format SQL
+			// format query
 			prepStmt.setString(1, f.getTitle());
 			prepStmt.setInt(2, f.getYear());
 			prepStmt.setString(3, f.getDirector());
@@ -322,7 +283,8 @@ public enum FilmDAOEnum {
 	 * 
 	 * Takes parameter of id an Integer and uses details of Film to format an SQL
 	 * query and then execute the query against the DB. This deletes a film entry in
-	 * DB.
+	 * DB. It first creates a string of the query and then uses prepared statements 
+	 * to format the query securely before executing it.
 	 * 
 	 * @param id Film object that will be deleted from DB.
 	 * @return b Boolean of true to indicate completion.

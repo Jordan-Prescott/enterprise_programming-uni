@@ -27,9 +27,10 @@ public class restfulAPIUtils {
 	 */
 	public static Boolean validateQuery(String column) {
 		
+		// valid search columns 
 		List<String> validSearchCriteria = Arrays.asList("id", "title", "year", "director", "stars", "genre", "rating");
 		
-		if (validSearchCriteria.contains(column)) {
+		if (validSearchCriteria.contains(column)) { // check if column is valid
 		    return true;
 		}
 		 return false;
@@ -50,11 +51,12 @@ public class restfulAPIUtils {
 	 */
 	public static String prePrepareStatement(String searchString, String column) {
 		
+		// columns that benefit from wildcard
 		List<String> wildCardcolumns = Arrays.asList("title", "director", "stars");
 		
 		String ss = searchString.toLowerCase(); // sanitize data 
 		
-		if (wildCardcolumns.contains(column)) {
+		if (wildCardcolumns.contains(column)) { // wildcard column
 			ss = "%" + searchString + "%";
 		}
 		

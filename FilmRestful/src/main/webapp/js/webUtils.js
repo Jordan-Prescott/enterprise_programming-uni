@@ -16,6 +16,11 @@
 /**
  * storeID
  * 
+ * This function is used to store the id of a film to localStorage
+ * so it can be used in other pages to retrieve the corresponding 
+ * films details. This is used when a user would like to update a
+ * film and is then directed to the films page. This page then uses 
+ * the id stored in localStorage to get the details of the film.
  * 
  * @param {string} id - Unique identifier of a film.
  */
@@ -26,6 +31,11 @@ function storeID(id) {
 /**
  * getBody
  * 
+ * This function is used to build the body of the index page with the 
+ * list of films. This function is simple in that the reference of body
+ * is stored and to format each row of the table it uses the getRow and 
+ * simply appends this. Reasoning for seperation is modularity futher 
+ * features could be developed to target just body with in this fucntion.
  * 
  * @param {string} format - Format of the data passed in either json, xml, or text.
  * @param {Array} data - Results returned from api request.
@@ -35,6 +45,7 @@ function getBody(data) {
 	// result location
 	var body = $('#filmTableBody');
 
+	// loop data, format, and append row to body
 	$.each(data, function(i, film) {
 			body.append(getRow(film)); // format a film into table row
 		})
@@ -50,6 +61,7 @@ function getBody(data) {
  * make the user experience seemless. 
  * 
  * @param {JSON} film - JSON object of Film.
+ * @returns {object} tableRow - Formatted row
  */
 function getRow(film) {
 	var tableRow = $('<tr id="' + film.id + '">');

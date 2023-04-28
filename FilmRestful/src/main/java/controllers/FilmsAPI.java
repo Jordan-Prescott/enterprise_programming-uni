@@ -35,14 +35,16 @@ import database.FilmDAOEnum;
  *         films database (DB). Each method can handle data types of JSON, XML,
  *         or plain text. Plain text has its own data format see below.
  * 
- *         GET : Returns all films in data format requested. POST : Creates
- *         film. PUT : Updates existing film using id to identify entry. DELETE
- *         : Deletes existing film using id to identify entry.
+ *         GET     : Returns all films in data format requested. 
+ *         POST    : Creates film. 
+ *         PUT     : Updates existing film using id to identify entry. 
+ *         DELETE  : Deletes existing film using id to identify entry.
  * 
  * @apiNote Plain/ Text Data Format: # used as deliminator and each entry on new
  *          line. Example of 3 entries below.
  * 
- *          title#year#director#stars#review title#year#director#stars#review
+ *          title#year#director#stars#review 
+ *          title#year#director#stars#review
  *          title#year#director#stars#review
  * 
  * 
@@ -57,7 +59,7 @@ public class FilmsAPI extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public FilmsAPI() {
+	public FilmsAPI() { //constructor
 		super();
 	}
 
@@ -79,17 +81,19 @@ public class FilmsAPI extends HttpServlet {
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		PrintWriter out = response.getWriter();
 
+		// store parameters
 		String format = request.getHeader("Accept");
 		String searchString = request.getParameter("searchString");
 		String searchBy = request.getParameter("searchBy");
 
 		ArrayList<Film> allFilms = null;
 
+		// query validation
 		if (searchBy != null && !restfulAPIUtils.validateQuery(searchBy)) { // invalid request
 			out.write("ERROR: The searchBy parameter was invalid, please check documentation for "
 					+ "valid criteria and try your request again.");
 			
-		} else if (searchString != null) { 
+		} else if (searchString != null) { // query valid 
 			
 			String preparedSearchString = restfulAPIUtils.prePrepareStatement(searchString, searchBy);
 																
@@ -111,7 +115,7 @@ public class FilmsAPI extends HttpServlet {
 			StringWriter sw = new StringWriter();
 			JAXBContext context;
 
-			try {
+			try { // map film to xml data using JAXB 
 				context = JAXBContext.newInstance(FilmList.class);
 				Marshaller m = context.createMarshaller();
 				m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -121,19 +125,19 @@ public class FilmsAPI extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			data = sw.toString();
+			data = sw.toString(); // data formatted to xml
 
 		} else if (format.equals("text/plain")) { // TEXT
 			String textOutput = "id#title#year#director#stars#genre#rating#review#\n"; // Headers
 
-			for (Film f : allFilms) {
+			for (Film f : allFilms) { // loop films and format output
 				String row = String.format("%s#%s#%s#%s#%s#%s#%s#%s\n", String.valueOf(f.getId()), f.getTitle(),
 						String.valueOf(f.getYear()), f.getDirector(), f.getStars(), f.getGenre(), f.getRating(),
 						f.getReview());
 				textOutput += row;
 			}
 
-			data = textOutput;
+			data = textOutput; // data formatted to text
 		}
 
 		if (allFilms.isEmpty()) {
@@ -141,6 +145,7 @@ public class FilmsAPI extends HttpServlet {
 		} else {
 			out.write(data); // return content to client
 		}
+		out.close(); // close writer
 	}
 
 	/**
@@ -162,12 +167,13 @@ public class FilmsAPI extends HttpServlet {
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		PrintWriter out = response.getWriter();
 
+		// store headers
 		String dataFormat = request.getHeader("Content-Type");
 		String data = request.getReader().lines().reduce("", (accumulator, actual) -> accumulator + actual);
 
 		Film f = null;
 
-		try {
+		try { // parse data sent depending on type specified in dataFormat
 			if (dataFormat.equals("application/json")) { // JSON
 				Gson gson = new Gson();
 				f = gson.fromJson(data, Film.class);
@@ -184,10 +190,10 @@ public class FilmsAPI extends HttpServlet {
 				System.out.println(f);
 
 			} else if (dataFormat.equals("text/plain")) { // TEXT
-				String values[] = data.split("#");
+				String values[] = data.split("#"); // # delimiter 
 
 				f = new Film();
-
+				
 				f.setTitle(values[0]);
 				f.setYear(Integer.parseInt(values[1].replaceAll("[^0-9]", ""))); // data sanitization
 				f.setDirector(values[2]);
@@ -215,7 +221,7 @@ public class FilmsAPI extends HttpServlet {
 			e.printStackTrace();
 			out.write("[ERROR] film not inserted please check the data and try again.");
 		}
-		out.close();
+		out.close(); // close writer
 	}
 
 	/**
@@ -236,12 +242,13 @@ public class FilmsAPI extends HttpServlet {
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		PrintWriter out = response.getWriter();
 
+		// store headers
 		String dataFormat = request.getHeader("Content-Type");
 		String data = request.getReader().lines().reduce("", (accumulator, actual) -> accumulator + actual);
 
 		Film f = null;
 
-		try {
+		try { // parse data sent depending on type specified in dataFormat
 			if (dataFormat.equals("application/json")) { // JSON
 				Gson gson = new Gson();
 				f = gson.fromJson(data, Film.class);
@@ -257,7 +264,7 @@ public class FilmsAPI extends HttpServlet {
 				System.out.println(f);
 
 			} else if (dataFormat.equals("text/plain")) { // TEXT
-				String values[] = data.split("#");
+				String values[] = data.split("#"); // # delimiter
 
 				f = new Film();
 
@@ -270,7 +277,6 @@ public class FilmsAPI extends HttpServlet {
 				f.setGenre(values[6]);
 				f.setRating(values[7]);
 				
-
 				System.out.println(f);
 			}
 		} catch (JsonSyntaxException | JAXBException | NumberFormatException e) { // format errors: client data sent
@@ -289,7 +295,7 @@ public class FilmsAPI extends HttpServlet {
 			e.printStackTrace();
 			out.write("ERROR: film not udpated please check the data and try again.");
 		}
-
+		out.close(); // close writer
 	}
 
 	/**
@@ -310,20 +316,18 @@ public class FilmsAPI extends HttpServlet {
 		FilmDAOEnum dao = FilmDAOEnum.INSTANCE;
 		PrintWriter out = response.getWriter();
 
+		// store headers 
 		String dataFormat = request.getHeader("Content-Type");
 		String data = request.getReader().lines().reduce("", (accumulator, actual) -> accumulator + actual);
 
 		Film f = null; // used for conversion
-		Integer id = null; // value extracted after conversation and used in deleteFilm(id);
 
-		try {
+		try { // parse data sent depending on type specified in dataFormat
 			if (dataFormat.equals("application/json")) { // JSON
 				Gson gson = new Gson();
 				f = gson.fromJson(data, Film.class);
 
-				id = f.getId();
-
-				System.out.println(id);
+				System.out.println(f.getId());
 
 			} else if (dataFormat.equals("application/xml")) { // XML
 				JAXBContext jaxbContext;
@@ -331,9 +335,7 @@ public class FilmsAPI extends HttpServlet {
 				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 				f = (Film) jaxbUnmarshaller.unmarshal(new StringReader(data));
 
-				id = f.getId();
-
-				System.out.println(id);
+				System.out.println(f.getId());
 
 			} else if (dataFormat.equals("text/plain")) { // TEXT
 				String values[] = data.split("#");
@@ -341,8 +343,7 @@ public class FilmsAPI extends HttpServlet {
 
 				f.setId(Integer.parseInt(values[0].replaceAll("[^0-9]", "")));
 				
-				id = f.getId();
-				System.out.println(id);
+				System.out.println(f.getId());
 			}
 		} catch (JsonSyntaxException | NumberFormatException | JAXBException e) { // format errors: client data sent
 																					// incorrectly
@@ -353,14 +354,14 @@ public class FilmsAPI extends HttpServlet {
 		}
 
 		try { // delete film
-			dao.deleteFilm(id);
+			dao.deleteFilm(f.getId());
 			out.write("film deleted.");
 		} catch (SQLException e) {
 			System.out.println(e);
 			e.printStackTrace();
 			out.write("ERROR: film not deleted please check the data and try again.");
 		}
-		out.close();
+		out.close(); // close writer
 	}
 
 }

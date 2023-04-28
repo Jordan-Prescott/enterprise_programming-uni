@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- CSS -->
 <meta charset="UTF-8">
 <link href="../css/bootstrap.css" rel="stylesheet">
 <title>Help Page</title>
@@ -10,7 +11,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 	<div class="container-fluid">
 
+		<!-- LOGO -->
 		<a href="../index.html"><img src="../images/logo.svg" alt="Film DB Logo."></a>
+		
+±		<!-- NAVBAR ITEMS -->
 		<ul class="navbar-nav me-auto">
 			<li class="nav-item"><a class="btn btn-success"
 				href="../pages/addFilm.html">Add Film</a></li>
@@ -20,7 +24,9 @@
 
 	</div>
 </nav>
+<!-- NAV END -->
 
+<!-- BODY START -->
 <body>
 	<div class="table-container">
 		<h1>Help Page</h1>
@@ -39,6 +45,7 @@
 		<ul>
 			<li><a href="#MainPage">Main Page</a></li>
 			<li><a href="#AddPage">Add Film Page</a></li>
+			<li><a href="#Help">Update Film Page</a></li>
 			<li><a href="#UpdatePage">Update Film Page</a></li>
 			<li><a href="#API">API Page</a></li>
 		</ul>
@@ -50,13 +57,15 @@
 			This is a simple page with a navigation bar across the top and the
 			films table in the body.</p>
 
+		<!-- Nav Bar -->
 		<h3>Navigation Bar</h3>
 		<p>The navigation is to help you navigate around the application
 			as well as hosting a couple other features such as notifications and
 			search. This bar contains a home button of 'Film DB' a link to this
 			help page, notifications section and the search function on the
 			right-hand side.</p>
-
+	
+		<!-- Add Film -->
 		<h4>Add Film</h4>
 		<p>This button will take you to a new page where you can add films to the collection!</p>
 			
@@ -66,16 +75,19 @@
 		If you have seen the film we pick for you click the button and we will pick again 
 		until we find you one!.</p>
 
-		<h4>Help</h4>
+		<!-- Help -->
+		<h4 id="Help">Help</h4>
 		<p>You have already found your way here! This button will bring
 			you to this page which as you can see details this web application.</p>
 
+		<!-- Notification Bar -->
 		<h4>Notifications</h4>
 		<p>The notification bell is where all actions and notifications
 			are shown. For example when you delete a film the message back from
 			the API will be displayed here indicating if this was a success or if
 			there was an error.</p>
 
+		<!-- Search -->
 		<h4>Search</h4>
 		<p>The search function has two fields, the first being the format
 			field where the user can specify the data format they prefer to
@@ -95,10 +107,12 @@
 			in some searches so please use the search button to narrow your
 			search for cleaner results.</p>
 
+		<!-- Body -->
 		<h3>Body</h3>
 		<p>The body is where the details of the films are shown in a table
 			with features for the user to interact with the table.</p>
-
+	
+		<!-- Film Table -->
 		<h4>Table</h4>
 		<p>The table displays a list of film entries, each row
 			representing a separate film, with columns for title, director,
@@ -108,6 +122,7 @@
 			while the "Delete" button allows them to remove the film from the
 			list entirely.</p>
 
+		<!-- Film Table Buttons -->
 		<h4>Update</h4>
 		<p>The update button will take the user to another page where they
 			are will be able to modify the details of a particular film</p>
@@ -156,4 +171,5 @@
 			it visually appealing and user-friendly.</p>
 	</div>
 </body>
+<!-- BODY END -->
 </html>
