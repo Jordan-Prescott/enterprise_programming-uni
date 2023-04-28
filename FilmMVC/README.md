@@ -24,3 +24,6 @@ If you have clicked the 'Add Film' or 'Update' button from the /home screen you 
 
 #####Deleting A Film.
 To delete a film click the 'Delete' button found at the side of each film entry in the table. This will then delete that film and reload the /home page where that film will no longer be shown as it was deleted from the database.
+
+##Documentation
+For documentation on the application code itself please find generated java docs in the doc folder.

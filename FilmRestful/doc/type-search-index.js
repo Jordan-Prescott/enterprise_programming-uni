@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"model","l":"Film"},{"p":"database","l":"FilmDAOEnum"},{"p":"model","l":"FilmList"},{"p":"controllers","l":"FilmsAPI"},{"p":"controllers","l":"restfulAPIUtils"}];updateSearchResults();
