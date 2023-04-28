@@ -121,11 +121,13 @@ public enum FilmDAOEnum {
 
 			int insertFilmResult = prepStmt.executeUpdate();
 
-			closeConnection();
 			b = true;
 		} catch (SQLException se) {
 			se.printStackTrace();
 			throw new SQLException("Film Not Added.");
+		} finally {
+			//regardless of error close conn
+			closeConnection();			
 		}
 
 		return b;
@@ -176,9 +178,11 @@ public enum FilmDAOEnum {
 				filmsArray.add(oneFilm);
 			}
 
-			closeConnection();
 		} catch (SQLException se) {
 			se.printStackTrace();
+		} finally {
+			//regardless of error close conn
+			closeConnection();			
 		}
 
 		return filmsArray;
@@ -210,9 +214,11 @@ public enum FilmDAOEnum {
 				oneFilm = getNextFilm(rs);
 			}
 
-			closeConnection();
 		} catch (SQLException se) {
 			se.printStackTrace();
+		} finally {
+			//regardless of error close conn
+			closeConnection();			
 		}
 
 		return oneFilm;
@@ -256,9 +262,11 @@ public enum FilmDAOEnum {
 				filmsArray.add(oneFilm);
 			}
 
-			closeConnection();
 		} catch (SQLException se) {
 			se.printStackTrace();
+		} finally {
+			//regardless of error close conn
+			closeConnection();			
 		}
 
 		return filmsArray;
@@ -295,12 +303,15 @@ public enum FilmDAOEnum {
 
 			int udpateFilmResult = prepStmt.executeUpdate(); // execute prepared statement
 
-			closeConnection();
 			b = true;
 		} catch (SQLException se) {
 			se.printStackTrace();
 			throw new SQLException("Film Not Updated.");
+		} finally {
+			//regardless of error close conn
+			closeConnection();			
 		}
+		
 		return b;
 	}
 
@@ -329,11 +340,13 @@ public enum FilmDAOEnum {
 
 			int deleteFilmResult = prepStmt.executeUpdate(); // execute prepared statement
 
-			closeConnection();
 			b = true;
 		} catch (SQLException se) {
 			se.printStackTrace();
 			throw new SQLException("Film Not Deleted.");
+		} finally {
+			//regardless of error close conn
+			closeConnection();			
 		}
 
 		return b;
