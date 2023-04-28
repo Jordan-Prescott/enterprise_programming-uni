@@ -30,70 +30,18 @@ function storeID(id) {
  * @param {string} format - Format of the data passed in either json, xml, or text.
  * @param {Array} data - Results returned from api request.
  */
-function getBody(format, data) {
+function getBody(data) {
 
 	// result location
 	var body = $('#filmTableBody');
-	
-	film = { // film object
-		id: null,
-		title: null,
-		year: null, 
-		director: null,
-		stars: null,
-		genre: null,
-		rating: null,
-		review: null
-	}
 
-	if (format == "xml") { // XML
-		$(data).find('film').each(function() { // loop through results 
-			film.id = $(this).find('id').text();
-			film.title = $(this).find('title').text();
-			film.year = $(this).find('year').text();
-			film.director = $(this).find('director').text();
-			film.stars = $(this).find('stars').text();
-			film.genre = $(this).find('genre').text();
-			film.rating = $(this).find('rating').text();
-			film.review = $(this).find('review').text();
-
-			body.append(formatRow(film)); // format a film into table row
-		});
-
-	} else if (format == "text") { // TEXT
-
-		// split whole text into list of films
-		var rowStrings = data.split(/[\n\r]+/);
-
-		// loop through list of films
-		for (var i = 1; i < rowStrings.length - 1; i++) {
-			row = rowStrings[i].split("#"); // split on # deliminator
-			
-			// format a film into table row
-			film.id = row[0];
-			film.title = row[1];
-			film.year = row[2];
-			film.director = row[3];
-			film.stars = row[4];
-			film.genre = row[5];
-			film.rating = row[6];
-			film.review = row[7]; 
-
-			body.append(formatRow(film));
-		}
-
-	} else { // JSON
-
-		// loop through film objects
-		$.each(data, function(i, film) {
-			body.append(formatRow(film)); // format a film into table row
+	$.each(data, function(i, film) {
+			body.append(getRow(film)); // format a film into table row
 		})
-	}
-
 }
 
 /**
- * formatRow
+ * getRow
  * 
  * This function takes in a JSON object of a single film and maps the object to a 
  * table row. The row has all values of the film as well as formatted buttons for
@@ -103,7 +51,7 @@ function getBody(format, data) {
  * 
  * @param {JSON} film - JSON object of Film.
  */
-function formatRow(film) {
+function getRow(film) {
 	var tableRow = $('<tr id="' + film.id + '">');
 	tableRow.append($('<td>').text(film.title));
 	tableRow.append($('<td>').text(film.year));
@@ -154,3 +102,4 @@ function clearNotification() {
 	// clear notification stored in local storage
 	setNotification("");
 }
+

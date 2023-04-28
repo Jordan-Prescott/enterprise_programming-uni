@@ -267,6 +267,9 @@ public class FilmsAPI extends HttpServlet {
 				f.setDirector(values[3]);
 				f.setStars(values[4]);
 				f.setReview(values[5]);
+				f.setGenre(values[6]);
+				f.setRating(values[7]);
+				
 
 				System.out.println(f);
 			}
@@ -333,11 +336,11 @@ public class FilmsAPI extends HttpServlet {
 				System.out.println(id);
 
 			} else if (dataFormat.equals("text/plain")) { // TEXT
-
+				String values[] = data.split("#");
 				f = new Film(); // Film object created for program consistency
 
-				f.setId(Integer.parseInt(data.replaceAll("[^0-9]", ""))); // data sanitization
-
+				f.setId(Integer.parseInt(values[0].replaceAll("[^0-9]", "")));
+				
 				id = f.getId();
 				System.out.println(id);
 			}

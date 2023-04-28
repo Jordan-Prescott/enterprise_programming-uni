@@ -14,6 +14,22 @@
  */
 
 /**
+ * contentHeader
+ * 
+ */
+function dataHeader(format) {
+
+	// format accept header on whats requested by user
+	if (format == "xml") {
+		return "application/xml"
+	} else if (format == "text") {
+		return "text/plain"
+	} else {
+		return "application/json"
+	}
+}
+
+/**
  * loadPage
  * 
  * 
@@ -46,15 +62,15 @@ function apiGetAllFilms() {
  * 
  * @param {string} id - Unique identifier of a film.
  */
-function apiDeleteFilm(id) {
+function apiDeleteFilm(film, content) {
 
 	// delete film
 	return $.ajax({
 		url: "FilmsAPI",
 		type: "DELETE",
 		dataType: "text",
-		data: JSON.stringify({ id: id }),
-		contentType: "application/json",
+		data: parseRequest(content, film),
+		contentType: dataHeader(content),
 		success: function(result) {
 			console.log(result);
 			setNotification(result);
@@ -78,34 +94,34 @@ function apiDeleteFilm(id) {
  * 
  * 
  */
-function apiCreateFilm(film) {
+function apiCreateFilm(film, content) {
 
-		// add film 
-		return $.ajax({
-			url: "../FilmsAPI",
-			type: "POST",
-			dataType: "text",
-			data: JSON.stringify(film),
-			contentType: "application/json",
-			success: function(result) {
-				console.log(result);
+	// add film 
+	return $.ajax({
+		url: "../FilmsAPI",
+		type: "POST",
+		dataType: "text",
+		data: parseRequest(content, film),
+		contentType: dataHeader(content),
+		success: function(result) {
+			console.log(result);
 
-				// set notifcation to alert the user
-				setNotification(result);
+			// set notifcation to alert the user
+			setNotification(result);
 
-			},
-			error: function(jqXHR, textStatus, errorThrown) {
-				// Handle any errors that occur during the request
-				console.error("Error: " + textStatus, errorThrown);
-				setNotification(result);
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			// Handle any errors that occur during the request
+			console.error("Error: " + textStatus, errorThrown);
+			setNotification(result);
 
-			},
-			complete: function() {
-				// Request complete
-				console.log("Added film complete.");
+		},
+		complete: function() {
+			// Request complete
+			console.log("Added film complete.");
 
-			}
-		});
+		}
+	});
 
 
 }
@@ -115,7 +131,7 @@ function apiCreateFilm(film) {
  * 
  * 
  */
-function apiUpdateFilm(film) {
+function apiUpdateFilm(film, content) {
 
 
 	// update film
@@ -123,8 +139,8 @@ function apiUpdateFilm(film) {
 		url: "../FilmsAPI",
 		type: "PUT",
 		dataType: "text",
-		data: JSON.stringify(film),
-		contentType: "application/json",
+		data: parseRequest(content, film),
+		contentType: dataHeader(content),
 		success: function(result) {
 			console.log(result);
 
@@ -158,7 +174,7 @@ function apiUpdateFilm(film) {
  * 
  * 
  */
-function apiSearchFilm(acceptHeader, format, column="", searchString="") {
+function apiSearchFilm(format, column = "", searchString = "") {
 
 	// get films matching search criteria
 	return $.ajax({
@@ -170,7 +186,7 @@ function apiSearchFilm(acceptHeader, format, column="", searchString="") {
 			searchString: searchString
 		},
 		headers: {
-			"Accept": acceptHeader
+			"Accept": dataHeader(format)
 		},
 		success: function(data) {
 			console.log("Search films success.");
@@ -184,5 +200,98 @@ function apiSearchFilm(acceptHeader, format, column="", searchString="") {
 			console.log("Load page complete");
 		}
 	});
+
+}
+
+/** 
+ * parseResponse
+ * 
+ */
+function parseResponse(format, data) {
+
+	var parsedFilms = []
+
+	if (format == "xml") { // XML
+		$(data).find('film').each(function() { // loop through results 
+
+			film = {
+				id: $(this).find('id').text(),
+				title: $(this).find('title').text(),
+				year: $(this).find('year').text(),
+				director: $(this).find('director').text(),
+				stars: $(this).find('stars').text(),
+				genre: $(this).find('genre').text(),
+				rating: $(this).find('rating').text(),
+				review: $(this).find('review').text()
+			}
+
+			parsedFilms.push(film); // format a film into table row
+		});
+
+	} else if (format == "text") { // TEXT
+
+		// split whole text into list of films
+		var rowStrings = data.split(/[\n\r]+/);
+
+		// loop through list of films
+		for (var i = 1; i < rowStrings.length - 1; i++) {
+			row = rowStrings[i].split("#"); // split on # deliminator
+
+			// format a film into table row
+			film = {
+				id: row[0],
+				title: row[1],
+				year: row[2],
+				director: row[3],
+				stars: row[4],
+				genre: row[5],
+				rating: row[6],
+				review: row[7],
+			}
+
+			parsedFilms.push(film);
+		}
+
+	} else { // JSON
+		parsedFilms = data;
+	}
+
+	return parsedFilms
+}
+
+
+/**
+ * parseRquest
+ * 
+ */
+function parseRequest(format, film) {
+
+	var parsedFilm = "";
+
+	if (format == "xml") {
+
+		parsedFilm = '<film>';
+		for (var i in film) {
+			parsedFilm += '<' + i + '>' + film[i] + '</' + i + '>';
+		}
+		parsedFilm += '</film>';
+
+	} else if (format == "text") {
+		
+		parsedFilm = film.id + "#" 
+		+ film.title + "#" 
+		+ film.year + "#" 
+		+ film.director + "#" 
+		+ film.stars + "#" 
+		+ film.review + "#"
+		+ film.genre + "#" 
+		+ film.rating;
+ 		 
+
+	} else {
+		parsedFilm = JSON.stringify(film);
+	}
+	
+	return parsedFilm
 
 }

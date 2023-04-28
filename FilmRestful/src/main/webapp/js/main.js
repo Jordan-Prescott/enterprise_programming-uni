@@ -20,7 +20,7 @@ function loadIndex() {
 
 		// display table
 		$.each(allFilms, function(i, film) {
-			body.append(formatRow(film));
+			body.append(getRow(film));
 		})
 
 	})
@@ -57,11 +57,22 @@ function loadUpdate() {
  * deleteFilm
  * 
  */
-function deleteFilm(id) {
+function deleteFilm(id) { // PAUSED 
+
+	film = { // only need id for deleting film
+		id: id,
+		title: "",
+		year: 0,  
+		director: "",
+		stars: "",
+		review: "",
+		genre: "",
+		rating: ""
+	}
 
 	if (confirm("Are you sure you want to delete this item?")) { //ask for confirmation
 
-		apiDeleteFilm(id).done(function(data) {
+		apiDeleteFilm(film, $('#format').val()).done(function(data) {
 			// remove entry in table
 			$('#' + id).remove();
 
@@ -83,15 +94,15 @@ function addFilm(){
 		year: $('#year').val(),
 		director: $('#director').val(),
 		stars: $('#stars').val(),
+		review: $('#review').val(),
 		genre: $('#genre').val(),
-		rating: $('#rating').val(),
-		review: $('#review').val()
+		rating: $('#rating').val()
 	}
 	
 	const allFieldsHaveValue = Object.values(film).every(val => val !== null && val !== undefined && val !== "");
 	
 	if (allFieldsHaveValue) {
-		apiCreateFilm(film).done(function() {
+		apiCreateFilm(film, $('#format').val()).done(function() {
 				//redirect to index
 				window.location.href = "../index.html";
 		})
@@ -125,7 +136,7 @@ function updateFilm() {
 	
 
 	if (allFieldsHaveValue) {
-		apiUpdateFilm(film).done(function() {
+		apiUpdateFilm(film, $('#format').val()).done(function() {
 			//redirect to index
 			window.location.href = "../index.html";
 		})
@@ -149,26 +160,17 @@ function searchFilms() {
 	var format = $("#format").val();
 	var searchBy = $("#searchBy").val();
 	var searchString = $("#searchString").val();
-
-	// format accept header on whats requested by user
-	if (format == "xml") {
-		accept = "application/xml"
-	} else if (format == "text") {
-		accept = "text/plain"
-	} else {
-		accept = "application/json"
-	}
 	
 
 	if (searchString) {
-		apiSearchFilm(accept, format, searchBy, searchString).done(function(data) {
-			getBody(format, data);
+		apiSearchFilm(format, searchBy, searchString).done(function(data) {
+			getBody(parseResponse(format, data));
 		})
 	} else {
 		setNotification("Not sure what you want? I'll give you them all.");
 		notify();
-		apiSearchFilm(accept, format, searchBy, searchString).done(function(data) {
-			getBody(format, data);
+		apiSearchFilm(format, searchBy, searchString).done(function(data) {
+			getBody(data);
 		})
 	}
 	
@@ -187,6 +189,6 @@ function randomFilm() {
 	const randomNumber = Math.floor(Math.random() * allFilms.length);
 	const film = allFilms[randomNumber];
 	
-	body.append(formatRow(film));
+	body.append(getRow(film));
 	
 }
