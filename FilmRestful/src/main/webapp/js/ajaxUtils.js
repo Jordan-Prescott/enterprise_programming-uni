@@ -278,14 +278,18 @@ function parseRequest(format, film) {
 
 	} else if (format == "text") {
 		
-		parsedFilm = film.id + "#" 
-		+ film.title + "#" 
+		if (film.id) { // add only for update 
+			parsedFilm = film.id + "#"
+		}
+		
+		parsedFilm += film.title + "#" 
 		+ film.year + "#" 
 		+ film.director + "#" 
 		+ film.stars + "#" 
 		+ film.review + "#"
 		+ film.genre + "#" 
 		+ film.rating;
+		
  		 
 
 	} else {

@@ -67,39 +67,3 @@ function getRow(film) {
 }
 
 
-/**
- * setNotification
- * 
- */
-function setNotification(message) {
-	localStorage.setItem("notification", message);
-}
-
-/**
- * getNotification
- * 
- */
-function getNotification() {
-	return localStorage.getItem("notification");
-}
-
-/**
- * clearNotification
- * 
- * clearNotification is a function that clears the message stored in localStorage 
- * and replaces the notification div with an empty li element. This resets the 
- * notification display, ready for a new notification. It's a useful function to 
- * provide a clean interface for the user.
- * 
- */
-function clearNotification() {
-	
-	var notify = $('#inbox')
-	
-	// replaces current notfication with nothing 
-	notify.replaceWith('<li id="inbox"></li>');
-	
-	// clear notification stored in local storage
-	setNotification("");
-}
-

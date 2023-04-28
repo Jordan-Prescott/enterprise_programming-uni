@@ -108,9 +108,9 @@ function addFilm(){
 		})
 	} else {
 		setNotification("Please ensure that all fields have a value.");
+		notify();
 	}
 	
-	notify();
 
 }
 
