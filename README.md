@@ -18,6 +18,6 @@ Each application achieves the goal, below are screenshots displaying some functi
 ![Added Film via Postman](./media/postman_confirmation_add_film.png "Postman Request Added Film")
 
 ## FilmRestful 
-![Update Film](./media/udpate_film_request_XMLpng "Update Film")
+![Update Film](./media/udpate_film_request_XML.png "Update Film")
 
-![Updated Film](./media/udpate_film_confirmation_XMLpng "Film Updated")
+![Updated Film](./media/udpate_film_confirmation_XML.png "Film Updated")
