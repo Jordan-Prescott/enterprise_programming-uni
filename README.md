@@ -9,6 +9,8 @@ Each application achieves the goal, below are screenshots displaying some functi
 ## FilmMVC (Hosted in AWS)
 ![Searching A Film](./media/searching_batman.png "Searching Batman")
 
+![Searching A Film Result](./media/searching_batman_2.png "Searching Batman Result")
+
 ## Restful API
 ![Activities Flow](./lib/media/other/activities.svg "Activities Flow")
 
