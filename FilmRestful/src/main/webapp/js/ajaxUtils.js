@@ -326,7 +326,6 @@ function parseResponse(format, data) {
 	return parsedFilms
 }
 
-
 /**
  * parseRquest
  * 

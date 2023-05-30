@@ -287,7 +287,8 @@ public class FilmsAPI extends HttpServlet {
 					+ "Please check the data and try again."); // Better formatted message for client
 		}
 
-		try { // update film
+		// update film
+		try { 
 			dao.updateFilm(f);
 			out.write("film updated.");
 		} catch (SQLException e) {

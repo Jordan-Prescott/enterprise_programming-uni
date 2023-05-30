@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<!-- CSS -->
+<link href="./css/bootstrap.css" rel="stylesheet"> 
+<title>Film DB</title>
+</head>
+
+<!-- NAV START -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	<div class="container-fluid">
+
+		<!-- LOGO -->
+		<a href="./index.html"><img class="logo" src="./images/logo.svg"
+			alt="Film DB Logo."></a>
+			
+			<!-- NAVBAR ITEMS -->
+		<ul class="navbar-nav me-auto">
+			<li class="nav-item"><a class="btn btn-success"
+				href="./pages/addFilm.html">Add Film</a></li>
+			<li class="nav-item"><a class="btn btn-secondary cdButton"
+				onclick="randomFilm()">Can't Decide?</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="./pages/help.html">Help</a></li>
+			<li class="nav-item"><a class="nav-link" href="./pages/API.html">API</a></li>
+			
+			<!-- NOTIFICATION BAR -->
+			<li class="nav-item"><img src="./images/notify.svg"
+				alt="notifications icon."></li>
+			<li id="inbox"></li>
+		</ul>
+		
+		<!-- SEARCH FORM -->
+		<!-- ALSO HOSTS FORMAT FOR PAGE AS USED IN SEARCH THIS IS BEST PLACEMENT -->
+		<div id="searchForm" class="d-flex">
+			<label class="form-label me-sm-2">Format:</label> <select
+				class="form-select me-sm-2" id="format">
+				<option value="json">JSON</option>
+				<option value="xml">XML</option>
+				<option value="text">TEXT</option>
+			</select> <label for="searchBy" class="form-label me-sm-2">Search:</label> <select
+				class="form-select me-sm-2" id="searchBy">
+				<option value="title">Title</option>
+				<option value="year">Year</option>
+				<option value="director">Director</option>
+				<option value="stars">Stars</option>
+				<option value="genre">Genre</option>
+				<option value="rating">Rating</option>
+			</select> <input class="form-control me-sm-2" type="search"
+				placeholder="e.g. BATMAN" name="searchString" id="searchString">
+			<button id="searchButton" onclick="searchFilms()"
+				class="btn btn-secondary" style="padding: 6px;">
+				<img alt="test" src="./images/search.svg">
+			</button>
+		</div>
+
+	</div>
+</nav>
+<!-- NAV END -->
+
+<!-- BODY START -->
+<body>
+	<!-- FILMS TABLE -->
+	<div class="table-container">
+		<table id="filmTable" class="table table-hover">
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Year</th>
+					<th>Director</th>
+					<th>Stars</th>
+					<th>Genre</th>
+					<th>Rating</th>
+					<th>Review</th>
+				</tr>
+			</thead>
+			<tbody id="filmTableBody">
+			</tbody>
+		</table>
+	</div>
+
+<!-- LOAD SCRIPS -->
+	<script src="./js/jQuery.js" type="text/javascript"></script>
+	<script src="./js/ajaxUtils.js" type="text/javascript"></script>
+	<script src="./js/webFeatures.js" type="text/javascript"></script>
+	<script src="./js/webUtils.js" type="text/javascript"></script>
+	<script src="./js/main.js" type="text/javascript"></script>
+	<script>
+		$(document).ready(loadIndex);
+	</script>
+</body>
+<!-- BODY -->
+</html>
