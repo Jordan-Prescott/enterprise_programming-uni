@@ -12,10 +12,12 @@ Each application achieves the goal, below are screenshots displaying some functi
 ![Searching A Film Result](./media/searching_batman_2.png "Searching Batman Result")
 
 ## Restful API
-![Activities Flow](./media/postman_request_add_film.png  "Postman Request Add Film")
+![Add Film via Postman](./media/postman_request_add_film.png  "Postman Request Add Film")
 
 
-![Activities Flow](./media/postman_confirmation_add_film.png "Postman Request Add Film")
+![Added Film via Postman](./media/postman_confirmation_add_film.png "Postman Request Added Film")
 
 ## FilmRestful 
-![Activities Flow](./lib/media/other/activities.svg "Activities Flow")
+![Update Film](./media/udpate_film_request_XMLpng "Update Film")
+
+![Updated Film](./media/udpate_film_confirmation_XMLpng "Film Updated")
