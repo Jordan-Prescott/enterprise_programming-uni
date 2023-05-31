@@ -1,4 +1,4 @@
-# Enterprise Programming Y3 Assignment
+# Enterprise Programming Assignment - Y3
 
 ## Description
 The assignment entails developing two applications for a film database: an MVC web application and a RESTful web service with a JavaScript client. The MVC web application allows users to perform CRUD operations on the film database through a user-friendly interface. Its built using Java servlets, JSP views, and modern frontend web frameworks, with a focus on code quality, modularity, and maintainability. The final version of the application was eployed to AWS cloud platform, utilizing a cloud-based MySQL database for persistence.
